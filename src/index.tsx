@@ -245,12 +245,100 @@ const chakraData = [
 ];
 
 const pranayamaData = [
-    { name: "Nadi Shodhana", translation: "Respiração das Narinas Alternadas", purpose: "Para harmonizar os hemisférios cerebrais, acalmar o sistema nervoso e equilibrar as energias masculina (Pingala) e feminina (Ida) dentro de você.", comoPraticar: ["Sente-se confortavelmente com a coluna ereta.", "Use o polegar direito para fechar a narina direita. Inspire lenta e profundamente pela narina esquerda.", "Feche a narina esquerda com o dedo anelar direito, libere o polegar e expire completamente pela narina direita.", "Inspire pela narina direita.", "Feche a narina direita com o polegar, libere o anelar e expire pela narina esquerda. Este é um ciclo. Continue por 3-5 minutos."], pontoFoco: "Sinta que, ao inspirar pela narina esquerda, você está nutrindo seu lado intuitivo e receptivo. Ao inspirar pela direita, você alimenta sua ação e poder no mundo.", termosPesquisa: "tutorial Nadi Shodhana para iniciantes, equilibrar Ida e Pingala nadis" },
-    { name: "Ujjayi Pranayama", translation: "Respiração Vitoriosa ou do Oceano", purpose: "Para aquecer o corpo, aumentar o foco e a concentração, e criar um ritmo meditativo que ancora a mente no presente. O som do oceano interior.", comoPraticar: ["Sente-se ou fique em uma postura confortável.", "Contraia suavemente a parte de trás da sua garganta (glote), como se estivesse sussurrando.", "Inspire e expire pelo nariz, mantendo a contração. A respiração produzirá um som suave, sibilante, como as ondas do mar.", "Mantenha a inspiração e a expiração com a mesma duração. Pratique por 2-3 minutos, aumentando gradualmente."], pontoFoco: "O som não é um efeito colateral, é a própria ferramenta. Concentre-se na vibração suave na sua garganta para ancorar no momento presente.", termosPesquisa: "como fazer a respiração Ujjayi, benefícios do som na meditação" },
-    { name: "Bhastrika", translation: "Respiração do Fole", purpose: "Para energizar o corpo e a mente, aumentar a vitalidade e transmutar a inércia. É uma explosão de Prana que purifica e desperta o fogo interior.", comoPraticar: ["Sente-se com a coluna ereta.", "Inspire e expire de forma forçada e rápida pelo nariz. O movimento deve vir do seu diafragma.", "Faça um ciclo de 10 respirações, depois respire normalmente. Comece com um ciclo e aumente para 3. (Cuidado: pode causar tontura)."], pontoFoco: "Visualize que você é um fole de ferreiro atiçando as brasas do seu Chakra do Plexo Solar (Manipura).", termosPesquisa: "Bhastrika pranayama tutorial, contraindicações Bhastrika" },
-    { name: "Sama Vritti", translation: "Respiração Quadrada", purpose: "Para acalmar a mente, reduzir a ansiedade e criar um estado de equilíbrio e estabilidade. É uma âncora de serenidade em meio ao caos.", comoPraticar: ["Sente-se ou deite-se confortavelmente.", "Expire todo o ar.", "Inspire contando até 4.", "Segure o ar, contando até 4.", "Expire contando até 4.", "Segure sem ar, contando até 4. Este é um ciclo. Continue por 3-5 minutos."], pontoFoco: "Visualize a construção de um quadrado perfeito com sua respiração, dando à sua mente uma estrutura sagrada para habitar.", termosPesquisa: "box breathing navy seals, respiração quadrada para ansiedade" },
-    { name: "Sheetali Pranayama", translation: "Respiração Refrescante", purpose: "Para resfriar o corpo, acalmar a mente e aliviar a frustração ou o excesso de 'fogo' (raiva).", comoPraticar: ["Sente-se confortavelmente.", "Enrole a língua em formato de 'U', colocando-a para fora da boca.", "Inspire lentamente pela língua enrolada, como se estivesse bebendo o ar por um canudo.", "Recolha a língua, feche a boca e expire lentamente pelo nariz.", "Repita por 5 a 10 ciclos."], pontoFoco: "Sinta o ar frio entrando e refrescando todo o seu sistema, como uma brisa suave em um dia quente.", termosPesquisa: "Sheetali pranayama tutorial, pranayama para resfriar o corpo" },
-    { name: "Bhramari Pranayama", translation: "Respiração da Abelha", purpose: "Para acalmar a mente de forma quase instantânea, aliviar a ansiedade e a raiva. A vibração do som tem um efeito calmante profundo no sistema nervoso.", comoPraticar: ["Sente-se em um lugar tranquilo e feche os olhos.", "Use os polegares para tapar suavemente os ouvidos.", "Inspire profundamente pelo nariz.", "Ao expirar, mantenha a boca fechada e produza um som de 'Mmmmm', como o zumbido de uma abelha.", "Continue pelo tempo que for confortável."], pontoFoco: "Concentre-se na vibração que o som produz em todo o seu crânio, permitindo que ela dissolva os pensamentos agitados.", termosPesquisa: "Bhramari pranayama benefícios, respiração da abelha para ansiedade" }
+    {
+        id: "nadi-shodhana",
+        name: "Nadi Shodhana",
+        translation: "Respiração das Narinas Alternadas",
+        icon: "☯️",
+        purpose: "Para harmonizar os hemisférios cerebrais, acalmar o sistema nervoso e equilibrar as energias masculina (Pingala, solar, lógica) e feminina (Ida, lunar, intuição) dentro de você.",
+        comoPraticar: [
+            "Sente-se confortavelmente com a coluna ereta.",
+            "Use o polegar direito para fechar a narina direita. Inspire lenta e profundamente pela narina esquerda.",
+            "Feche a narina esquerda com o dedo anelar direito, libere o polegar e expire completamente pela narina direita.",
+            "Inspire pela narina direita.",
+            "Feche a narina direita com o polegar, libere o anelar e expire pela narina esquerda. Este é um ciclo. Continue por 3-5 minutos."
+        ],
+        pontoFoco: "Sinta que, ao inspirar pela narina esquerda, você está nutrindo seu lado intuitivo. Ao inspirar pela direita, você alimenta sua ação no mundo. Você é o tecelão que une as duas energias.",
+        termosPesquisa: "tutorial Nadi Shodhana para iniciantes, equilibrar Ida e Pingala nadis"
+    },
+    {
+        id: "ujjayi-pranayama",
+        name: "Ujjayi Pranayama",
+        translation: "Respiração Vitoriosa",
+        icon: "🌊",
+        purpose: "Para aquecer o corpo, aumentar o foco e criar um ritmo meditativo que ancora a mente no presente. O som do oceano interior.",
+        comoPraticar: [
+            "Sente-se ou fique em uma postura confortável.",
+            "Contraia suavemente a parte de trás da sua garganta (glote), como se estivesse sussurrando.",
+            "Inspire e expire pelo nariz, mantendo a contração. A respiração produzirá um som suave, sibilante.",
+            "Mantenha a inspiração e a expiração com a mesma duração."
+        ],
+        pontoFoco: "O som é a própria ferramenta. Concentre-se na vibração suave na sua garganta. Deixe que o som rítmico, como as ondas do mar, lave seus pensamentos ansiosos.",
+        termosPesquisa: "como fazer a respiração Ujjayi, benefícios do som na meditação"
+    },
+    {
+        id: "bhastrika",
+        name: "Bhastrika",
+        translation: "Respiração do Fole",
+        icon: "🔥",
+        purpose: "Para energizar o corpo e a mente, aumentar a vitalidade e transmutar a inércia. É uma explosão de Prana que purifica e desperta o fogo interior.",
+        comoPraticar: [
+            "Sente-se com a coluna ereta.",
+            "Inspire e expire de forma forçada e rápida pelo nariz. O movimento deve vir do seu diafragma.",
+            "Faça um ciclo de 10 respirações, depois respire normalmente. Comece com um ciclo e aumente para 3. (Cuidado: pode causar tontura)."
+        ],
+        pontoFoco: "Visualize que você é um fole de ferreiro atiçando as brasas do seu Chakra do Plexo Solar (Manipura).",
+        termosPesquisa: "Bhastrika pranayama tutorial, contraindicações Bhastrika"
+    },
+    {
+        id: "sama-vritti",
+        name: "Sama Vritti",
+        translation: "Respiração Quadrada",
+        icon: "🔲",
+        purpose: "Para acalmar a mente, reduzir a ansiedade e criar um estado de equilíbrio e estabilidade. É uma âncora de serenidade em meio ao caos.",
+        comoPraticar: [
+            "Sente-se ou deite-se confortavelmente.",
+            "Expire todo o ar.",
+            "Inspire contando até 4.",
+            "Segure o ar, contando até 4.",
+            "Expire contando até 4.",
+            "Segure sem ar, contando até 4. Este é um ciclo."
+        ],
+        pontoFoco: "Visualize a construção de um quadrado perfeito com sua respiração, dando à sua mente uma estrutura sagrada para habitar.",
+        termosPesquisa: "box breathing navy seals, respiração quadrada para ansiedade"
+    },
+    {
+        id: "sheetali-pranayama",
+        name: "Sheetali Pranayama",
+        translation: "Respiração Refrescante",
+        icon: "❄️",
+        purpose: "Para resfriar o corpo, acalmar a mente e aliviar a frustração ou o excesso de 'fogo' (raiva).",
+        comoPraticar: [
+            "Sente-se confortavelmente.",
+            "Enrole a língua em formato de 'U', colocando-a para fora da boca.",
+            "Inspire lentamente pela língua enrolada, como se estivesse bebendo o ar por um canudo.",
+            "Recolha a língua, feche a boca e expire lentamente pelo nariz.",
+            "Repita por 5 a 10 ciclos."
+        ],
+        pontoFoco: "Sinta o ar frio entrando e refrescando todo o seu sistema, como uma brisa suave em um dia quente.",
+        termosPesquisa: "Sheetali pranayama tutorial, pranayama para resfriar o corpo"
+    },
+    {
+        id: "bhramari-pranayama",
+        name: "Bhramari Pranayama",
+        translation: "Respiração da Abelha",
+        icon: "🐝",
+        purpose: "Para acalmar a mente de forma quase instantânea, aliviar a ansiedade e a raiva. A vibração do som tem um efeito calmante profundo no sistema nervoso.",
+        comoPraticar: [
+            "Sente-se em um lugar tranquilo e feche os olhos.",
+            "Use os polegares para tapar suavemente os ouvidos.",
+            "Inspire profundamente pelo nariz.",
+            "Ao expirar, mantenha a boca fechada e produza um som de 'Mmmmm', como o zumbido de uma abelha.",
+            "Continue pelo tempo que for confortável."
+        ],
+        pontoFoco: "Concentre-se na vibração que o som produz em todo o seu crânio, permitindo que ela dissolva os pensamentos agitados.",
+        termosPesquisa: "Bhramari pranayama benefícios, respiração da abelha para ansiedade"
+    }
 ];
 
 
@@ -395,6 +483,79 @@ function renderChakras() {
     `).join('');
 }
 
+function createBoxBreathingGuide(containerId: string) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="breathing-guide-container mt-6 p-4 border-t-2 border-dashed border-[#a37e2c] text-center">
+            <h4 class="font-semibold text-lg font-cinzel mb-4">Guia Interativo</h4>
+            <div class="relative w-32 h-32 mx-auto">
+                <div id="${containerId}-square" class="absolute inset-0 bg-[#a37e2c] transition-transform duration-3000 ease-linear"></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <p id="${containerId}-instruction" class="text-xl font-semibold text-black"></p>
+                    <p id="${containerId}-timer" class="text-4xl font-cinzel text-black font-bold"></p>
+                </div>
+            </div>
+            <button id="${containerId}-start-btn" class="btn-primary py-2 px-6 rounded-lg mt-4">Iniciar</button>
+        </div>
+    `;
+
+    const startBtn = document.getElementById(`${containerId}-start-btn`);
+    const instructionEl = document.getElementById(`${containerId}-instruction`);
+    const timerEl = document.getElementById(`${containerId}-timer`);
+    const squareEl = document.getElementById(`${containerId}-square`);
+
+    if (!startBtn || !instructionEl || !timerEl || !squareEl) return;
+
+    let intervalId: number | null = null;
+    let stateIndex = 0;
+    let countdown = 4;
+    const states = ['Inspire', 'Segure', 'Expire', 'Segure'];
+    const scales = [1.2, 1.2, 1, 1]; // Scale for inhale/hold, normal for exhale/hold
+
+    const resetToIdle = () => {
+        if (intervalId) clearInterval(intervalId);
+        intervalId = null;
+        startBtn.textContent = 'Iniciar';
+        instructionEl.textContent = 'Pressione Iniciar';
+        timerEl.textContent = '';
+        squareEl.style.transform = 'scale(1)';
+        stateIndex = 0;
+        countdown = 4;
+    };
+
+    resetToIdle(); // Set initial state
+
+    startBtn.addEventListener('click', () => {
+        if (intervalId) {
+            resetToIdle();
+        } else {
+            startBtn.textContent = 'Parar';
+
+            const updateCycle = () => {
+                 timerEl.textContent = String(countdown + 1);
+
+                 if(countdown === 3) { // Start of a new phase
+                    instructionEl.textContent = states[stateIndex];
+                    squareEl.style.transform = `scale(${scales[stateIndex]})`;
+                 }
+
+                 countdown--;
+                 if (countdown < 0) {
+                     stateIndex = (stateIndex + 1) % states.length;
+                     countdown = 3;
+                 }
+            }
+
+            // Initial call to set the first state immediately
+            updateCycle();
+
+            intervalId = setInterval(updateCycle, 1000);
+        }
+    });
+}
+
 function renderPranayamas() {
     const container = document.getElementById('pranayama-list');
     if (!container) return;
@@ -408,9 +569,12 @@ function renderPranayamas() {
         ${pranayamaData.map(pranayama => `
             <div class="card p-6 no-hover">
                 <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="flex-1 text-center md:text-left">
-                        <h3 class="text-xl font-bold font-cinzel text-[#c8a44d]">${pranayama.name}</h3>
-                        <p class="text-sm text-gray-400 mb-3 italic">(${pranayama.translation})</p>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-center md:justify-start mb-2">
+                            <span class="text-3xl mr-4">${pranayama.icon}</span>
+                            <h3 class="text-xl font-bold font-cinzel text-[#c8a44d]">${pranayama.name}</h3>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-3 italic text-center md:text-left">(${pranayama.translation})</p>
                         <p class="text-sm text-gray-300 mb-4"><strong>Para que serve:</strong> ${pranayama.purpose}</p>
                         <p class="text-sm text-[#a37e2c] mb-4"><strong>Ponto de Foco:</strong> ${pranayama.pontoFoco}</p>
                     </div>
@@ -421,6 +585,7 @@ function renderPranayamas() {
                         ${pranayama.comoPraticar.map(step => `<li>${step}</li>`).join('')}
                     </ol>
                 </div>
+                ${pranayama.id === 'sama-vritti' ? `<div id="box-breathing-guide-container"></div>` : ''}
                 <div class="mt-4 border-t border-[#444] pt-4">
                     <p class="text-xs text-gray-500"><strong>Termos de Pesquisa:</strong> <em>${pranayama.termosPesquisa}</em></p>
                 </div>
@@ -428,6 +593,9 @@ function renderPranayamas() {
         `).join('')}
         </div>
     `;
+
+    // Afer rendering the container, initialize the interactive guide
+    createBoxBreathingGuide('box-breathing-guide-container');
 }
 
 function renderJornadaFlorescer() {
