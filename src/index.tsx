@@ -1,16 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, addDoc, deleteDoc, onSnapshot, collection, query, orderBy, serverTimestamp, DocumentSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// --- CONFIG & DATA ---
-const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID
-};
+// --- DATA ---
 
 const pillarZeroData = {
     title: "Pilar Zero: A Teia do Mundo (Cosmovisão)",
@@ -353,8 +341,6 @@ const jornadaFlorescerData = [
 ];
 
 // --- STATE & DOM ELEMENTS ---
-let app, db, auth, userId;
-
 const errorModal = document.getElementById('error-modal');
 const modalMessage = document.getElementById('modal-message');
 const modalTitle = document.getElementById('modal-title');
@@ -389,16 +375,6 @@ function renderPillarCards() {
         const p = pillarData[key];
         return `<div class="pillar-card rounded-lg p-4 text-center" data-pillar="${key}"><div class="text-3xl mb-2">${p.title.split(' ')[0]}</div><h3 class="font-cinzel font-bold">${p.title.split(' ').slice(2).join(' ')}</h3><p class="text-xs text-gray-400">${p.chakra}</p></div>`;
     }).join('');
-}
-
-
-function createGrimoireCard(doc) {
-    const data = doc.data();
-    const card = document.createElement('div');
-    card.className = 'card rounded-lg p-4';
-    const tagsHtml = (data.tags && Array.isArray(data.tags)) ? data.tags.map(tag => `<span class="text-xs bg-[#444] text-[#a37e2c] font-semibold px-2 py-1 rounded">${tag}</span>`).join(' ') : `<span class="text-xs bg-[#444] text-[#a37e2c] font-semibold px-2 py-1 rounded">${data.tags || 'Sem Selo'}</span>`;
-    card.innerHTML = `<div class="flex justify-between items-start"><div><h4 class="text-lg font-bold font-cinzel text-[#c8a44d]">${data.title}</h4><p class="text-sm text-gray-400 whitespace-pre-wrap my-2">${data.content}</p><div class="flex flex-wrap gap-2">${tagsHtml}</div></div><button class="delete-btn text-red-500 hover:text-red-700" data-id="${doc.id}"><i class="fas fa-times"></i></button></div>`;
-    return card;
 }
 
 function renderAstrologyTimeline() {
@@ -651,81 +627,6 @@ function showPillarDetails(pillarId) {
     document.getElementById('pillar-detail-section')?.classList.add('active');
 }
 
-// --- FIRESTORE FUNCTIONS ---
-const getCollectionRef = (collectionName) => collection(db, `users/${userId}/${collectionName}`);
-
-async function handleAddItem(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    
-    // --- O FEITIÇO DE REVELAÇÃO ---
-    const dataToSave = {
-        title: formData.get('title'),
-        content: formData.get('content'),
-        tags: formData.get('tags') ? formData.get('tags').split(',').map(t => t.trim()).filter(Boolean) : [],
-        createdAt: serverTimestamp()
-    };
-    console.log("🔮 Objeto sendo enviado ao Firestore:", dataToSave);
-    // -----------------------------
-
-    try { 
-        await addDoc(getCollectionRef('grimoire_entries'), dataToSave); 
-        form.reset(); 
-        const accordionContent = form.closest('.accordion-content');
-        if (accordionContent) accordionContent.style.maxHeight = null;
-    }
-    catch (error) { 
-        console.error("🔥 Erro ao selar a inscrição no Tomo:", error);
-        showDiagnosticModal("Falha ao Salvar", "Ocorreu um erro ao salvar sua inscrição. Verifique os detalhes no console do navegador (F12)."); 
-    }
-}
-
-async function handleDeleteItem(event) {
-    const button = event.target.closest('.delete-btn');
-    if (!button) return;
-    if (confirm("Tem certeza que deseja apagar esta inscrição do seu Tomo?")) {
-        try { 
-            await deleteDoc(doc(db, `users/${userId}/grimoire_entries/${button.dataset.id}`)); 
-        }
-        catch (error) { 
-            console.error("Falha ao Apagar:", { message: error.message, code: error.code });
-            showDiagnosticModal("Falha ao Apagar", "Não foi possível apagar a inscrição. Verifique sua conexão e tente novamente."); 
-        }
-    }
-}
-
-function setupCollectionListener(collectionName, listId, cardFn) {
-    const q = query(getCollectionRef(collectionName), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-        const listEl = document.getElementById(listId);
-        if (!listEl) return;
-        listEl.innerHTML = '';
-        if (snapshot.empty) { listEl.innerHTML = '<p class="text-center text-gray-500">Seu tomo ainda aguarda as primeiras palavras.</p>'; return; }
-        snapshot.forEach(doc => {
-            try {
-                listEl.appendChild(cardFn(doc));
-            } catch (renderError) {
-                console.error(`Error rendering document ${doc.id}:`, { message: renderError.message });
-                const errorEl = document.createElement('div');
-                errorEl.className = 'card rounded-lg p-4 text-red-500';
-                errorEl.textContent = `Falha ao renderizar a inscrição: ${doc.id}. Verifique os dados no console.`;
-                listEl.appendChild(errorEl);
-            }
-        });
-    }, (error) => {
-        console.error("Firestore Snapshot Error:", { message: error.message, code: error.code });
-        const checklist = `
-            <p>A aplicação não conseguiu se conectar ao seu santuário de dados. Por favor, verifique os seguintes pontos no seu Console do Firebase:</p>
-            <ul class="list-disc list-inside mt-2 space-y-1">
-                <li><strong>Cloud Firestore Ativado:</strong> Verifique se você criou um banco de dados Cloud Firestore no seu projeto.</li>
-                <li><strong>Regras de Segurança:</strong> Suas regras de segurança podem estar bloqueando o acesso.</li>
-            </ul>
-        `;
-        showDiagnosticModal("Falha na Conexão com o Santuário de Dados", checklist);
-    });
-}
-
 // --- EVENT LISTENERS ---
 function setupEventListeners() {
     document.getElementById('close-modal-btn')?.addEventListener('click', hideModal);
@@ -755,8 +656,9 @@ function setupEventListeners() {
         });
     });
     
-    document.getElementById('add-grimoire-form')?.addEventListener('submit', handleAddItem);
-    document.getElementById('grimoire-list')?.addEventListener('click', handleDeleteItem);
+    // Grimoire listeners are now disabled as we removed Firebase
+    // document.getElementById('add-grimoire-form')?.addEventListener('submit', handleAddItem);
+    // document.getElementById('grimoire-list')?.addEventListener('click', handleDeleteItem);
 
     document.querySelector('#tomo-de-poder-section .accordion-header')?.addEventListener('click', (e) => {
         const header = e.currentTarget;
@@ -775,55 +677,22 @@ function setupEventListeners() {
 
 // --- INITIALIZATION ---
 function initApp() {
-    try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userId = user.uid;
-                loadingMessage?.classList.add('hidden');
-                appContainer?.classList.remove('hidden');
-                const userIdDisplay = document.getElementById('user-id-display');
-                if (userIdDisplay) {
-                    userIdDisplay.innerHTML = `<strong>Guardião da Centelha:</strong><br><span class="text-xs text-gray-500">A água, como a magia, sempre encontra seu caminho.</span>`;
-                }
-                
-                setupCollectionListener('grimoire_entries', 'grimoire-list', createGrimoireCard);
-                
-                // Render all static content
-                renderPillarCards();
-                renderAstrologyTimeline();
-                renderSeasonalHerbs();
-                renderCrystalList();
-                renderChakras();
-                renderPranayamas();
-                renderJornadaFlorescer();
-                setupEventListeners();
-                
-            } else {
-                signInAnonymously(auth).catch((err) => {
-                    console.error("Auth Error:", { message: err.message, code: err.code });
-                     const checklist = `
-                        <p>A autenticação anônima falhou. Verifique no seu Console do Firebase:</p>
-                        <ul class="list-disc list-inside mt-2 space-y-1">
-                            <li><strong>Autenticação Anônima Ativada:</strong> Vá para 'Authentication' -> 'Sign-in method' e garanta que 'Anônimo' está ativado.</li>
-                            <li><strong>Domínios Autorizados:</strong> Verifique se o domínio da aplicação está na lista de domínios autorizados.</li>
-                        </ul>
-                    `;
-                    showDiagnosticModal("Falha na Autenticação", checklist);
-                });
-            }
-        });
-    } catch (error) {
-        console.error("Initialization Error:", { message: error.message, code: error.code });
-        const errorMessage = "Ocorreu um erro crítico na inicialização. Verifique o console para mais detalhes.";
-        if(loadingMessage) {
-            loadingMessage.innerHTML = `<p class="text-red-500 font-semibold text-center">${errorMessage}</p>`;
-        }
-        showDiagnosticModal("Erro Crítico de Inicialização", errorMessage);
+    loadingMessage?.classList.add('hidden');
+    appContainer?.classList.remove('hidden');
+    const userIdDisplay = document.getElementById('user-id-display');
+    if (userIdDisplay) {
+        userIdDisplay.innerHTML = `<strong>Guardião da Centelha:</strong><br><span class="text-xs text-gray-500">A água, como a magia, sempre encontra seu caminho.</span>`;
     }
+
+    // Render all static content
+    renderPillarCards();
+    renderAstrologyTimeline();
+    renderSeasonalHerbs();
+    renderCrystalList();
+    renderChakras();
+    renderPranayamas();
+    renderJornadaFlorescer();
+    setupEventListeners();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
