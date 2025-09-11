@@ -1,0 +1,9 @@
+export const jornadaFlorescerData = [
+    { etapa: 1, title: "Etapa 1: Despertar da Consciência (Iniciação)", arquétipos: "Perseu e Medusa, Rá, Atena", pilares: "Terra e Luz", praticas: "Aterramento Diário, Diário de Sincronicidades, Meditação 'Não-Cachimbo' de Magritte." },
+    { etapa: 2, title: "Etapa 2: Definindo o Propósito", arquétipos: "Hércules, Ísis, Thoth", pilares: "Água e Som", praticas: "Criação de um 'Altar de Intenções', Prática do 'Eu Sou' com o Pilar do Som, Escrita Terapêutica para explorar paixões." },
+    { etapa: 3, title: "Etapa 3: A Forja da Vontade", arquétipos: "Teseu e o Minotauro, Sekhmet, Ares", pilares: "Fogo", praticas: "Rituais de Queima de Intenções para liberar o que não serve mais, Prática de Bhastrika Pranayama para gerar energia, Ação Focada em uma meta desafiadora." },
+    { etapa: 4, title: "Etapa 4: A Ponte do Coração", arquétipos: "Inanna, Afrodite, Kuan Yin", pilares: "Ar", praticas: "Meditação Metta Bhavana (Amor-Bondade), Prática da Comunicação Não-Violenta (CNV) em um relacionamento, Atos de generosidade anônima." },
+    { etapa: 5, title: "Etapa 5: A Voz da Alma", arquétipos: "Hermes, Apolo, Bragi", pilares: "Som e Mente", praticas: "Prática de canto de mantras, Exercício de falar sua verdade em uma situação segura, Prática da Escuta Ativa." },
+    { etapa: 6, title: "Etapa 6: A Visão Interior", arquétipos: "Anúbis, Hécate, Odin", pilares: "Luz", praticas: "Diário de Sonhos com foco na interpretação, Meditação no Terceiro Olho (Ajna), Prática de atenção às sincronicidades." },
+    { etapa: 7, title: "Etapa 7: União Divina", arquétipos: "Shiva e Shakti, A Grande Mãe, O Andrógino Divino", pilares: "Mente", praticas: "Meditação Silenciosa para transcender o ego, Contemplação da natureza para sentir a unidade, Estudo do Pilar Zero 'A Teia do Mundo'.", premium: true }
+];
