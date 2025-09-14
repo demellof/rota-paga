@@ -6,6 +6,7 @@ import AuthPage from './pages/AuthPage';
 import { useAuth } from './context/AuthContext';
 import JornadaSection from './components/JornadaSection';
 import ServicesPage from './pages/ServicesPage';
+import SoprosDeVidaPage from './pages/SoprosDeVidaPage';
 
 // Data imports
 import { pillarData, pillarZeroData } from './data/pillarData';
@@ -63,6 +64,10 @@ const App: React.FC = () => {
 
                 <ContentSection id="jornada-section" isActive={activeSection === 'jornada-section'}>
                     <JornadaSection />
+                </ContentSection>
+
+                <ContentSection id="pranayama-section" isActive={activeSection === 'pranayama-section'}>
+                    <SoprosDeVidaPage />
                 </ContentSection>
 
                 <ContentSection id="consultas-section" isActive={activeSection === 'consultas-section'}>
