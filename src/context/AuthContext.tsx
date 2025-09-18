@@ -6,6 +6,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from 'firebase/auth';
 
 // Define the shape of the context data
@@ -16,6 +18,7 @@ interface AuthContextType {
     signup: (email: string, pass: string) => Promise<any>;
     login: (email: string, pass: string) => Promise<any>;
     logout: () => Promise<any>;
+    signInWithGoogle: () => Promise<any>;
 }
 
 // Create the context with a default value
@@ -26,6 +29,7 @@ const AuthContext = createContext<AuthContextType>({
     signup: () => new Promise(() => {}),
     login: () => new Promise(() => {}),
     logout: () => new Promise(() => {}),
+    signInWithGoogle: () => new Promise(() => {}),
 });
 
 // Custom hook to use the auth context easily in other components
@@ -71,6 +75,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return signOut(auth);
     }
 
+    function signInWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        return signInWithPopup(auth, provider);
+    }
+
     const value = {
         currentUser,
         userProfile,
@@ -78,6 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signup,
         login,
         logout,
+        signInWithGoogle,
     };
 
     return (

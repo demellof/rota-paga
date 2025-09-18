@@ -7,7 +7,16 @@ const AuthPage: React.FC = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { signup, login } = useAuth();
+    const { signup, login, signInWithGoogle } = useAuth();
+
+    const handleGoogleSignIn = async () => {
+        setError('');
+        try {
+            await signInWithGoogle();
+        } catch (err: any) {
+            setError(err.message || 'Falha ao entrar com Google.');
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,6 +74,17 @@ const AuthPage: React.FC = () => {
                         </button>
                     </div>
                 </form>
+                <div className="relative flex py-5 items-center">
+                    <div className="flex-grow border-t border-gray-600"></div>
+                    <span className="flex-shrink mx-4 text-gray-400 text-xs">OU</span>
+                    <div className="flex-grow border-t border-gray-600"></div>
+                </div>
+                <div>
+                    <button onClick={handleGoogleSignIn} disabled={loading} className="w-full btn-secondary py-2 px-4 rounded-lg flex items-center justify-center">
+                        <i className="fab fa-google mr-2"></i>
+                        Entrar com Google
+                    </button>
+                </div>
                 <div className="text-center">
                     <button onClick={() => setIsLogin(!isLogin)} className="text-sm text-[#a37e2c] hover:underline">
                         {isLogin ? 'Não tem uma conta? Registre-se' : 'Já tem uma conta? Entre'}
