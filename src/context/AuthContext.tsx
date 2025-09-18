@@ -62,10 +62,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 setCurrentUser(user);
             } catch (error) {
                 console.error("Error during auth state change:", error);
-                // In case of an error (e.g., Firestore rules, network issue),
-                // set user and profile to null to avoid an inconsistent state.
+                // If profile creation/fetching fails, we should still treat the user as logged in.
+                // The user object from onAuthStateChanged is the source of truth for auth status.
+                // We just might not have a profile in our DB.
+                setCurrentUser(user);
                 setUserProfile(null);
-                setCurrentUser(null);
             } finally {
                 // VERY IMPORTANT: Always set loading to false, even if there's an error.
                 // This prevents the app from getting stuck on the loading screen.
