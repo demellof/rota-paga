@@ -1,0 +1,68 @@
+/* Styles for the Compêndio Sincrético page */
+
+.chakra-card {
+    background-color: #1F2937; /* gray-800 */
+    border: 1px solid #374151; /* gray-700 */
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 1.5rem; /* p-6 */
+    margin-bottom: 1.5rem; /* mb-6 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.chakra-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: #FFFFFF;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid;
+}
+
+/* Cores dos Chakras para as bordas dos títulos */
+.border-muladhara { border-color: #EF4444; } /* red-500 */
+.text-muladhara { color: #F87171; } /* red-400 */
+
+.border-svadhisthana { border-color: #F97316; } /* orange-500 */
+.text-svadhisthana { color: #FB923C; } /* orange-400 */
+
+.border-manipura { border-color: #EAB308; } /* yellow-500 */
+.text-manipura { color: #FCD34D; } /* yellow-400 */
+
+.border-anahata { border-color: #22C55E; } /* green-500 */
+.text-anahata { color: #4ADE80; } /* green-400 */
+
+.border-vishuddha { border-color: #3B82F6; } /* blue-500 */
+.text-vishuddha { color: #60A5FA; } /* blue-400 */
+
+.border-ajna { border-color: #6366F1; } /* indigo-500 */
+.text-ajna { color: #818CF8; } /* indigo-400 */
+
+.border-sahasrara { border-color: #A855F7; } /* purple-500 */
+.text-sahasrara { color: #C084FC; } /* purple-400 */
+
+.syncretic-box {
+    background-color: #374151; /* gray-700 */
+    border-left: 4px solid #9CA3AF; /* gray-400 */
+    padding: 1rem;
+    border-radius: 0.375rem; /* rounded-md */
+    margin-top: 0.5rem;
+}
+
+.syncretic-box strong {
+    color: #FFFFFF;
+}
+
+.warning-box {
+    background-color: #451a03; /* orange-950 */
+    border-left: 4px solid #F97316; /* orange-500 */
+    color: #FED7AA; /* orange-200 */
+    padding: 1rem;
+    border-radius: 0.375rem; /* rounded-md */
+    margin-top: 1rem;
+}

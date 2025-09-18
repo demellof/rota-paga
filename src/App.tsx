@@ -8,9 +8,9 @@ import JornadaSection from './components/JornadaSection';
 import ServicesPage from './pages/ServicesPage';
 import SoprosDeVidaPage from './pages/SoprosDeVidaPage';
 import HomePage from './pages/HomePage'; // Importar a HomePage
+import PillarSection from './components/PillarSection'; // Importar PillarSection
+import CompendioPage from './pages/CompendioPage'; // Importar CompendioPage
 
-// Data imports
-import { pillarData, pillarZeroData } from './data/pillarData';
 // ... other data imports can be added here as sections are built out
 
 const App: React.FC = () => {
@@ -59,24 +59,11 @@ const App: React.FC = () => {
                 {currentUser ? (
                     <>
                         <ContentSection id="main-section" isActive={activeSection === 'main-section'}>
-                            <h2 className="text-2xl font-bold font-cinzel text-center text-[#c8a44d] mb-6">Os Sete Pilares da Ascensão</h2>
-                            <div id="pillar-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                                <div className="pillar-card rounded-lg p-4 text-center md:col-span-2 lg:col-span-4 cursor-pointer" data-pillar="zero">
-                                    <div className="text-3xl mb-2">{pillarZeroData.symbol}</div>
-                                    <h3 className="font-cinzel font-bold">{pillarZeroData.title}</h3>
-                                    <p className="text-xs text-gray-400">A Cosmovisão Sincrética</p>
-                                </div>
-                                {Object.keys(pillarData).map(key => {
-                                    const p = pillarData[key as keyof typeof pillarData];
-                                    return (
-                                        <div key={key} className="pillar-card rounded-lg p-4 text-center" data-pillar={key}>
-                                            <div className="text-3xl mb-2">{p.title.split(' ')[0]}</div>
-                                            <h3 className="font-cinzel font-bold">{p.title.split(' ').slice(2).join(' ')}</h3>
-                                            <p className="text-xs text-gray-400">{p.chakra}</p>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                           <PillarSection />
+                        </ContentSection>
+
+                        <ContentSection id="compendio-section" isActive={activeSection === 'compendio-section'}>
+                           <CompendioPage />
                         </ContentSection>
 
                         <ContentSection id="jornada-section" isActive={activeSection === 'jornada-section'}>
