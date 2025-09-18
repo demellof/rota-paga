@@ -6,99 +6,61 @@
     <title>Rota Pagã: Guia Holístico Pessoal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* --- Base & Thematic Styles --- */
+        /* Global styles inspired by the new Compendio design */
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #090a0f;
-            background-image: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            color: #e0e0e0;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* gray-900 */
+            color: #D1D5DB; /* gray-300 */
         }
-        .font-cinzel { font-family: 'Cinzel Decorative', serif; }
 
-        /* --- Component Styles --- */
+        /* Keeping old styles for compatibility with existing components, can be refactored later */
+        .font-cinzel { font-family: 'Cinzel Decorative', serif; }
         .card {
-            background-color: rgba(20, 22, 28, 0.5); /* Semi-transparent dark card */
-            border: 1px solid #444;
-            backdrop-filter: blur(5px);
+            background-color: #1F2937; /* gray-800 */
+            border: 1px solid #374151; /* gray-700 */
             transition: all 0.3s ease;
-        }
-        .card:hover:not(.no-hover) {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px rgba(218, 165, 32, 0.3); /* Golden glow */
-            border-color: #daa520;
         }
         .btn-primary {
-            background-color: #daa520; /* GoldenRod */
-            color: #1a1a1a;
+            background-color: #3B82F6; /* blue-500 */
+            color: #FFFFFF;
             font-weight: bold;
             transition: all 0.3s ease;
-            border: 1px solid #daa520;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .btn-primary:hover {
-            background-color: #c89a1e;
-            box-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
-        }
-        .btn-primary:disabled {
-            background-color: #5f4a1a;
-            cursor: not-allowed;
+            background-color: #2563EB; /* blue-600 */
         }
         .btn-secondary {
-            background-color: transparent;
+            background-color: #374151; /* gray-700 */
             color: #e0e0e0;
             font-weight: bold;
             transition: all 0.3s ease;
-            border: 1px solid #8c7853; /* Bronze */
+            border: 1px solid #4B5563; /* gray-600 */
         }
         .btn-secondary:hover {
-            background-color: #8c7853;
-            color: #1a1a1a;
+            background-color: #4B5563; /* gray-600 */
         }
         .form-input {
-            background-color: rgba(0,0,0,0.3);
-            border: 1px solid #555;
+            background-color: #374151; /* gray-700 */
+            border: 1px solid #4B5563; /* gray-600 */
             color: #e0e0e0;
             border-radius: 0.5rem;
             padding: 0.75rem;
             width: 100%;
-            transition: border-color 0.3s ease;
         }
-        .form-input:focus {
-            outline: none;
-            border-color: #daa520;
-        }
-        .tab {
-            transition: all 0.2s ease-in-out;
-        }
-        .tab.active {
-            border-bottom: 2px solid #daa520;
-            color: #daa520;
-            transform: scale(1.05);
+         .tab.active {
+            border-bottom: 2px solid #60A5FA; /* blue-400 */
+            color: #60A5FA;
         }
         .pillar-card {
-            background-color: rgba(20, 22, 28, 0.5);
-            border: 1px solid #444;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
+             background-color: #1F2937; /* gray-800 */
+            border: 1px solid #374151; /* gray-700 */
         }
         .pillar-card:hover {
-            background-color: rgba(44, 44, 44, 0.7);
-            border-color: #daa520;
-            transform: translateY(-5px);
+            border-color: #60A5FA;
         }
-
-        /* --- Utility & Animation --- */
-        .content-section { display: none; }
-        .content-section.active { display: block; }
-        .accordion-header { cursor: pointer; transition: background-color 0.2s ease; }
-        .accordion-header:hover { background-color: #3a3a3a; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>

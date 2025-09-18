@@ -9,6 +9,7 @@ import ServicesPage from './pages/ServicesPage';
 import SoprosDeVidaPage from './pages/SoprosDeVidaPage';
 import HomePage from './pages/HomePage'; // Importar a HomePage
 import PillarSection from './components/PillarSection'; // Importar PillarSection
+import CompendioPage from './pages/CompendioPage'; // Importar CompendioPage
 
 // ... other data imports can be added here as sections are built out
 
@@ -59,6 +60,10 @@ const App: React.FC = () => {
                     <>
                         <ContentSection id="main-section" isActive={activeSection === 'main-section'}>
                            <PillarSection />
+                        </ContentSection>
+
+                        <ContentSection id="compendio-section" isActive={activeSection === 'compendio-section'}>
+                           <CompendioPage />
                         </ContentSection>
 
                         <ContentSection id="jornada-section" isActive={activeSection === 'jornada-section'}>

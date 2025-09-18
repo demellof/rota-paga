@@ -26,6 +26,7 @@ interface NavBarProps {
 
 const premiumNavItems = [
     { sectionId: 'main-section', icon: 'fas fa-home', label: 'Santuário' },
+    { sectionId: 'compendio-section', icon: 'fas fa-scroll', label: 'Compêndio' },
     { sectionId: 'jornada-section', icon: 'fas fa-seedling', label: 'Jornada Florescer' },
     { sectionId: 'pranayama-section', icon: 'fas fa-wind', label: 'Sopros de Vida' },
     { sectionId: 'consultas-section', icon: 'fas fa-comments-dollar', label: 'Consultas' },
