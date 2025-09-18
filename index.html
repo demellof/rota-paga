@@ -6,58 +6,103 @@
     <title>Rota Pagã: Guia Holístico Pessoal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #1a1a1a; color: #e0e0e0; }
-        .font-cinzel { font-family: 'Cinzel', serif; }
-        .card { background-color: #2c2c2c; border: 1px solid #444; transition: all 0.3s ease; }
-        .card:hover:not(.no-hover) { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); border-color: #a37e2c; }
-        .btn-primary { background-color: #a37e2c; color: #1a1a1a; font-weight: bold; transition: background-color 0.3s ease; }
-        .btn-primary:hover { background-color: #c8a44d; }
-        .btn-primary:disabled { background-color: #5f4a1a; cursor: not-allowed; }
-        .btn-secondary { background-color: #444; color: #e0e0e0; font-weight: bold; transition: background-color 0.3s ease; }
-        .btn-secondary:hover { background-color: #555; }
-        .form-input { background-color: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 0.5rem; padding: 0.75rem; width: 100%; }
-        .tab.active { border-bottom: 2px solid #a37e2c; color: #c8a44d; }
-        .pillar-card { background-color: #2c2c2c; border: 1px solid #444; transition: all 0.3s ease; cursor: pointer; }
-        .pillar-card:hover { background-color: #3a3a3a; border-color: #a37e2c; }
+        /* --- Base & Thematic Styles --- */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #090a0f;
+            background-image: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .font-cinzel { font-family: 'Cinzel Decorative', serif; }
+
+        /* --- Component Styles --- */
+        .card {
+            background-color: rgba(20, 22, 28, 0.5); /* Semi-transparent dark card */
+            border: 1px solid #444;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .card:hover:not(.no-hover) {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(218, 165, 32, 0.3); /* Golden glow */
+            border-color: #daa520;
+        }
+        .btn-primary {
+            background-color: #daa520; /* GoldenRod */
+            color: #1a1a1a;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid #daa520;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            background-color: #c89a1e;
+            box-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
+        }
+        .btn-primary:disabled {
+            background-color: #5f4a1a;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: #e0e0e0;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid #8c7853; /* Bronze */
+        }
+        .btn-secondary:hover {
+            background-color: #8c7853;
+            color: #1a1a1a;
+        }
+        .form-input {
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid #555;
+            color: #e0e0e0;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #daa520;
+        }
+        .tab {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab.active {
+            border-bottom: 2px solid #daa520;
+            color: #daa520;
+            transform: scale(1.05);
+        }
+        .pillar-card {
+            background-color: rgba(20, 22, 28, 0.5);
+            border: 1px solid #444;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+        .pillar-card:hover {
+            background-color: rgba(44, 44, 44, 0.7);
+            border-color: #daa520;
+            transform: translateY(-5px);
+        }
+
+        /* --- Utility & Animation --- */
         .content-section { display: none; }
         .content-section.active { display: block; }
         .accordion-header { cursor: pointer; transition: background-color 0.2s ease; }
         .accordion-header:hover { background-color: #3a3a3a; }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
-        .jornada-step .accordion-header h3 { transition: text-decoration 0.3s ease; }
-        .jornada-step.completed > div { opacity: 0.7; }
-        .jornada-step.completed .accordion-header h3 { text-decoration: line-through; }
-        .completion-toggle {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #a37e2c;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .completion-toggle i {
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: #1a1a1a;
-        }
-        .jornada-step.completed .completion-toggle {
-            background-color: #a37e2c;
-        }
-        .jornada-step.completed .completion-toggle i {
-            opacity: 1;
-        }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-[#1a1a1a] text-[#e0e0e0]">
+<body>
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
 </body>
