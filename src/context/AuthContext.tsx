@@ -49,15 +49,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                await createUserProfileDocument(user);
-                const profile = await getUserProfile(user.uid);
-                setUserProfile(profile);
-            } else {
+            try {
+                if (user) {
+                    // If the user is logged in, create/get their profile from Firestore
+                    await createUserProfileDocument(user);
+                    const profile = await getUserProfile(user.uid);
+                    setUserProfile(profile);
+                } else {
+                    // If the user is logged out, clear the profile
+                    setUserProfile(null);
+                }
+                setCurrentUser(user);
+            } catch (error) {
+                console.error("Error during auth state change:", error);
+                // In case of an error (e.g., Firestore rules, network issue),
+                // set user and profile to null to avoid an inconsistent state.
                 setUserProfile(null);
+                setCurrentUser(null);
+            } finally {
+                // VERY IMPORTANT: Always set loading to false, even if there's an error.
+                // This prevents the app from getting stuck on the loading screen.
+                setLoading(false);
             }
-            setCurrentUser(user);
-            setLoading(false);
         });
 
         return unsubscribe;
