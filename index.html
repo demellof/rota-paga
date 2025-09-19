@@ -3,68 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Pagã: Guia Holístico Pessoal</title>
+    <title>Grimório Virtual: Rota Pagã</title>
+
+    <!-- Fontes: Cinzel (Místico) e Inter (Leitura) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        /* Global styles inspired by the new Compendio design */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* gray-900 */
-            color: #D1D5DB; /* gray-300 */
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-        /* Keeping old styles for compatibility with existing components, can be refactored later */
-        .font-cinzel { font-family: 'Cinzel Decorative', serif; }
-        .card {
-            background-color: #1F2937; /* gray-800 */
-            border: 1px solid #374151; /* gray-700 */
-            transition: all 0.3s ease;
-        }
-        .btn-primary {
-            background-color: #3B82F6; /* blue-500 */
-            color: #FFFFFF;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #2563EB; /* blue-600 */
-        }
-        .btn-secondary {
-            background-color: #374151; /* gray-700 */
-            color: #e0e0e0;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 1px solid #4B5563; /* gray-600 */
-        }
-        .btn-secondary:hover {
-            background-color: #4B5563; /* gray-600 */
-        }
-        .form-input {
-            background-color: #374151; /* gray-700 */
-            border: 1px solid #4B5563; /* gray-600 */
-            color: #e0e0e0;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            width: 100%;
-        }
-         .tab.active {
-            border-bottom: 2px solid #60A5FA; /* blue-400 */
-            color: #60A5FA;
-        }
-        .pillar-card {
-             background-color: #1F2937; /* gray-800 */
-            border: 1px solid #374151; /* gray-700 */
-        }
-        .pillar-card:hover {
-            border-color: #60A5FA;
-        }
-    </style>
-<link rel="stylesheet" href="/index.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Base Styles -->
+    <link rel="stylesheet" href="/index.css">
+
+    <!-- Custom Application Styles -->
+    <link rel="stylesheet" href="/src/styles/main.css">
 </head>
-<body>
+<body class="antialiased">
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
 </body>
