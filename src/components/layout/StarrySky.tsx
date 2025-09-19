@@ -10,8 +10,9 @@ const StarrySky: React.FC = () => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        let stars: { x: number; y: number; radius: number; speed: number }[] = [];
+        let stars: { x: number; y: number; radius: number; speed: number, alpha: number }[] = [];
         const numStars = 500;
+        const warpSpeed = 0.5; // Slow, fantasy-like speed
 
         const setCanvasSize = () => {
             canvas.width = window.innerWidth;
@@ -25,7 +26,8 @@ const StarrySky: React.FC = () => {
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     radius: Math.random() * 1.5 + 0.5,
-                    speed: Math.random() * 0.3 + 0.1,
+                    speed: (Math.random() * 0.5 + 0.2) * warpSpeed,
+                    alpha: Math.random() * 0.5 + 0.5,
                 });
             }
         };
@@ -33,20 +35,19 @@ const StarrySky: React.FC = () => {
         const drawStars = () => {
             if (!ctx) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-
             for (const star of stars) {
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 224, ${star.alpha})`; // Light yellow/white stars
                 ctx.fill();
             }
         };
 
         const updateStars = () => {
             for (const star of stars) {
-                star.y -= star.speed;
-                if (star.y < 0) {
-                    star.y = canvas.height;
+                star.y += star.speed; // Move down
+                if (star.y > canvas.height) {
+                    star.y = 0;
                     star.x = Math.random() * canvas.width;
                 }
             }
@@ -76,7 +77,7 @@ const StarrySky: React.FC = () => {
         };
     }, []);
 
-    return <canvas id="starry-sky" ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -10 }} />;
+    return <canvas id="starfield" ref={canvasRef} />;
 };
 
 export default StarrySky;
