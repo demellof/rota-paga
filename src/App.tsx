@@ -1,89 +1,74 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
-import NavBar from './components/NavBar';
-import ContentSection from './components/ContentSection';
-import AuthPage from './pages/AuthPage';
 import { useAuth } from './context/AuthContext';
-import JornadaSection from './components/JornadaSection';
-import ServicesPage from './pages/ServicesPage';
-import SoprosDeVidaPage from './pages/SoprosDeVidaPage';
-import HomePage from './pages/HomePage'; // Importar a HomePage
-import PillarSection from './components/PillarSection'; // Importar PillarSection
-import CompendioPage from './pages/CompendioPage'; // Importar CompendioPage
+import AuthPage from './pages/AuthPage';
 
-// ... other data imports can be added here as sections are built out
+// Layout Components
+import StarrySky from './components/layout/StarrySky';
+import Sidebar from './components/layout/Sidebar';
+
+// Page Components
+import OraclePage from './pages/OraclePage';
+import PillarsOverviewPage from './pages/PillarsOverviewPage';
+import JornadaPage from './pages/JornadaPage';
+import SigilosPage from './pages/SigilosPage';
+import HerbarioPage from './pages/HerbarioPage';
+import CristaisPage from './pages/CristaisPage';
+import SoprosPage from './pages/SoprosPage';
+import RodaDoAnoPage from './pages/RodaDoAnoPage';
+import PanteaoPage from './pages/PanteaoPage';
+import GaleriaPage from './pages/GaleriaPage';
+
+const GuardiaoPage = () => <div className="content-card glass-effect"><h1 className="page-title">Guardião</h1></div>;
+
 
 const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
-    const [activeSection, setActiveSection] = useState('main-section');
-    const [showAuth, setShowAuth] = useState(false); // Estado para mostrar a página de autenticação
+    const [activePage, setActivePage] = useState('page-oracle'); // Default to the new Oracle page
 
-    const handleTabClick = (sectionId: string) => {
-        if (!currentUser && sectionId !== 'home-section') {
-            setShowAuth(true); // Mostra a autenticação se o utilizador não estiver logado e clicar numa secção premium
-        } else if (sectionId === 'auth-section') {
-            setShowAuth(true);
-        }
-        else {
-            setActiveSection(sectionId);
-            setShowAuth(false);
+    const navigate = (pageId: string) => {
+        setActivePage(pageId);
+        // On mobile, close the sidebar after navigation
+        const sidebar = document.getElementById('sidebar');
+        if (window.innerWidth < 1024) {
+            sidebar?.classList.add('-translate-x-full');
         }
     };
 
     if (loading) {
         return (
-            <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1a] z-50">
-                <div className="text-center p-8 rounded-lg">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#a37e2c] mx-auto mb-4"></div>
-                    <p className="text-lg font-semibold font-cinzel text-[#a37e2c]">Despertando a Rota Pagã...</p>
-                </div>
+            <div className="fixed inset-0 flex items-center justify-center bg-[#0f0524]">
+                <div className="spinner" style={{ borderTopColor: '#fff' }}></div>
             </div>
         );
     }
 
-    // Se o utilizador não estiver autenticado e o showAuth for verdadeiro, mostramos a página de autenticação
-    if (!currentUser && showAuth) {
+    if (!currentUser) {
         return <AuthPage />;
     }
 
+    const renderActivePage = () => {
+        switch (activePage) {
+            case 'page-oracle': return <OraclePage />;
+            case 'page-pillars-overview': return <PillarsOverviewPage />;
+            case 'page-jornada': return <JornadaPage />;
+            case 'page-sigilos': return <SigilosPage />;
+            case 'page-herbario': return <HerbarioPage />;
+            case 'page-cristais': return <CristaisPage />;
+            case 'page-sopros': return <SoprosPage />;
+            case 'page-roda-do-ano': return <RodaDoAnoPage />;
+            case 'page-panteao': return <PanteaoPage />;
+            case 'page-galeria': return <GaleriaPage />;
+            case 'page-guardiao': return <GuardiaoPage />;
+            default: return <OraclePage />;
+        }
+    };
+
     return (
-        <div id="app-container">
-            <Header userDisplayName={
-                currentUser
-                ? <><strong>Guardião:</strong><br /><span className="text-xs text-gray-500">{currentUser.email}</span></>
-                : "Desperte o seu caminho"
-            } />
-            <NavBar activeSection={activeSection} onTabClick={handleTabClick} />
-
-            <main className="container mx-auto p-4 md:p-8">
-                {currentUser ? (
-                    <>
-                        <ContentSection id="main-section" isActive={activeSection === 'main-section'}>
-                           <PillarSection />
-                        </ContentSection>
-
-                        <ContentSection id="compendio-section" isActive={activeSection === 'compendio-section'}>
-                           <CompendioPage />
-                        </ContentSection>
-
-                        <ContentSection id="jornada-section" isActive={activeSection === 'jornada-section'}>
-                            <JornadaSection />
-                        </ContentSection>
-
-                        <ContentSection id="pranayama-section" isActive={activeSection === 'pranayama-section'}>
-                            <SoprosDeVidaPage />
-                        </ContentSection>
-
-                        <ContentSection id="consultas-section" isActive={activeSection === 'consultas-section'}>
-                            <ServicesPage />
-                        </ContentSection>
-                    </>
-                ) : (
-                    // Se não houver utilizador, mostramos a HomePage
-                    <ContentSection id="home-section" isActive={true}>
-                        <HomePage />
-                    </ContentSection>
-                )}
+        <div className="relative">
+            <StarrySky />
+            <Sidebar navigate={navigate} activePage={activePage} />
+            <main id="main-content" className="main-content p-4 pt-16 lg:pt-8 transition-all duration-300 ease-in-out">
+                {renderActivePage()}
             </main>
         </div>
     );
