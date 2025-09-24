@@ -12,7 +12,7 @@ const StarrySky: React.FC = () => {
 
         let stars: { x: number; y: number; radius: number; speed: number, alpha: number }[] = [];
         const numStars = 500;
-        const warpSpeed = 0.5; // Slow, fantasy-like speed
+        const warpSpeed = 0.5;
 
         const setCanvasSize = () => {
             canvas.width = window.innerWidth;
@@ -38,14 +38,14 @@ const StarrySky: React.FC = () => {
             for (const star of stars) {
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 224, ${star.alpha})`; // Light yellow/white stars
+                ctx.fillStyle = `rgba(255, 255, 224, ${star.alpha})`;
                 ctx.fill();
             }
         };
 
         const updateStars = () => {
             for (const star of stars) {
-                star.y += star.speed; // Move down
+                star.y += star.speed;
                 if (star.y > canvas.height) {
                     star.y = 0;
                     star.x = Math.random() * canvas.width;
