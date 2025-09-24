@@ -1,29 +1,28 @@
 import React from 'react';
-import { compendioData } from '../data/compendioData';
-import ChakraCard from '../components/compendio/ChakraCard';
-import '../styles/compendio.css';
+
+const compendioItems = [
+    { id: 'muladhara', chakra: "1. Muladhara (Raiz)", tema: "Aterramento", ritual: "Banho de Descarrego (Sal Grosso + Arruda)" },
+    { id: 'svadhisthana', chakra: "2. Svadhisthana (Sacral)", tema: "Fluidez", ritual: "Chá de Camomila e Erva-Cidreira" },
+    { id: 'manipura', chakra: "3. Manipura (Plexo Solar)", tema: "Vontade", ritual: "Chá de Alecrim com Canela" },
+    { id: 'anahata', chakra: "4. Anahata (Coração)", tema: "Compaixão", ritual: "Banho de Pétalas de Rosa" },
+    { id: 'vishuddha', chakra: "5. Vishuddha (Garganta)", tema: "Verdade", ritual: "Chá de Hortelã" },
+    { id: 'ajna', chakra: "6. Ajna (Frontal)", tema: "Intuição", ritual: "Saquinho de Lavanda no travesseiro" },
+    { id: 'sahasrara', chakra: "7. Sahasrara (Coroa)", tema: "Unidade", ritual: "Meditação com Incenso de Olíbano" },
+];
 
 const CompendioPage: React.FC = () => {
     return (
-        <div className="container mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
-            <header className="text-center mb-10">
-                <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-400 mb-2">
-                    Compêndio Sincrético
-                </h1>
-                <p className="text-xl text-cyan-100">Um Guia de Ervas, Cristais e Rituais para os 7 Pilares</p>
-                <p className="mt-4 text-sm text-gray-400">Este guia une a sabedoria tradicional (usos energéticos e rituais) com o conhecimento científico (compostos ativos e benefícios estudados) para uma abordagem holística.</p>
-            </header>
+        <section className="content-panel p-6">
+            <h1 className="page-title text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-sky-400">Compêndio Sincrético</h1>
+            <p className="page-subtitle">Correspondências práticas de Ervas, Cristais e Rituais para os 7 Pilares.</p>
 
-            <main>
-                {compendioData.map(item => (
-                    <ChakraCard key={item.id} item={item} />
-                ))}
-            </main>
-
-            <footer className="text-center mt-12 text-gray-500 text-sm">
-                <p>Este compêndio é uma ferramenta de apoio ao bem-estar e não substitui aconselhamento médico, psicológico ou nutricional profissional. Sempre consulte um profissional de saúde qualificado para tratar condições de saúde.</p>
-            </footer>
-        </div>
+            {compendioItems.map(item => (
+                <div key={item.id} className="content-card glass-effect mb-4">
+                    <h2 className={`text-2xl font-bold mb-3 text-${item.id}`}>{item.chakra}: {item.tema}</h2>
+                    <p className="text-sm mt-3"><strong>Ritual Sugerido:</strong> {item.ritual}.</p>
+                </div>
+            ))}
+        </section>
     );
 };
 

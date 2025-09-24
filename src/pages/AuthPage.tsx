@@ -37,10 +37,10 @@ const AuthPage: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-[#1a1a1a]">
-            <div className="w-full max-w-md p-8 space-y-6 card rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold text-center font-cinzel text-[#c8a44d]">
-                    {isLogin ? 'Bem-vindo de volta, Guardião' : 'Crie sua Conta'}
+        <div className="flex items-center justify-center min-h-screen bg-[#111827]">
+            <div className="w-full max-w-md p-8 space-y-6 rounded-lg shadow-lg" style={{background: 'rgba(31, 41, 55, 0.5)', backdropFilter: 'blur(10px)'}}>
+                <h2 className="text-2xl font-bold text-center font-fantasy text-white">
+                    {isLogin ? 'Acessar a Rota Pagã' : 'Criar Conta'}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
@@ -51,7 +51,7 @@ const AuthPage: React.FC = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="form-input mt-1"
+                            className="astro-input mt-1 w-full"
                             placeholder="seu@email.com"
                         />
                     </div>
@@ -63,30 +63,30 @@ const AuthPage: React.FC = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="form-input mt-1"
+                            className="astro-input mt-1 w-full"
                             placeholder="********"
                         />
                     </div>
-                    {error && <p className="text-red-500 text-xs text-center">{error}</p>}
+                    {error && <p className="text-red-400 text-xs text-center">{error}</p>}
                     <div>
-                        <button type="submit" disabled={loading} className="w-full btn-primary py-2 px-4 rounded-lg">
+                        <button type="submit" disabled={loading} className="calculate-button w-full">
                             {loading ? 'Carregando...' : (isLogin ? 'Entrar' : 'Registrar')}
                         </button>
                     </div>
                 </form>
-                <div className="relative flex py-5 items-center">
+                <div className="relative flex py-2 items-center">
                     <div className="flex-grow border-t border-gray-600"></div>
                     <span className="flex-shrink mx-4 text-gray-400 text-xs">OU</span>
                     <div className="flex-grow border-t border-gray-600"></div>
                 </div>
                 <div>
-                    <button onClick={handleGoogleSignIn} disabled={loading} className="w-full btn-secondary py-2 px-4 rounded-lg flex items-center justify-center">
+                    <button onClick={handleGoogleSignIn} disabled={loading} className="w-full text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center" style={{backgroundColor: '#4285F4'}}>
                         <i className="fab fa-google mr-2"></i>
                         Entrar com Google
                     </button>
                 </div>
                 <div className="text-center">
-                    <button onClick={() => setIsLogin(!isLogin)} className="text-sm text-[#a37e2c] hover:underline">
+                    <button onClick={() => setIsLogin(!isLogin)} className="text-sm text-cyan-400 hover:underline">
                         {isLogin ? 'Não tem uma conta? Registre-se' : 'Já tem uma conta? Entre'}
                     </button>
                 </div>

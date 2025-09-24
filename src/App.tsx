@@ -1,89 +1,89 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
-import NavBar from './components/NavBar';
-import ContentSection from './components/ContentSection';
-import AuthPage from './pages/AuthPage';
 import { useAuth } from './context/AuthContext';
-import JornadaSection from './components/JornadaSection';
-import ServicesPage from './pages/ServicesPage';
-import SoprosDeVidaPage from './pages/SoprosDeVidaPage';
-import HomePage from './pages/HomePage'; // Importar a HomePage
-import PillarSection from './components/PillarSection'; // Importar PillarSection
-import CompendioPage from './pages/CompendioPage'; // Importar CompendioPage
+import AuthPage from './pages/AuthPage';
 
-// ... other data imports can be added here as sections are built out
+// Layout Components
+import StarrySky from './components/layout/StarrySky';
+import Sidebar from './components/layout/Sidebar';
+
+// Page Components
+import SantuarioPage from './pages/SantuarioPage';
+import JornadaPage from './pages/JornadaPage';
+import PantaculosPage from './pages/PantaculosPage';
+import ForjadorPage from './pages/ForjadorPage';
+import PilaresDietaPage from './pages/PilaresDietaPage';
+import CompendioPage from './pages/CompendioPage';
+import SoprosPage from './pages/SoprosPage';
+import RodaDoAnoPage from './pages/RodaDoAnoPage';
+import PanteaoPage from './pages/PanteaoPage';
+import GaleriaPage from './pages/GaleriaPage';
+import OraclePage from './pages/OraclePage';
+import GuardiaoPage from './pages/GuardiaoPage';
 
 const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
-    const [activeSection, setActiveSection] = useState('main-section');
-    const [showAuth, setShowAuth] = useState(false); // Estado para mostrar a página de autenticação
+    const [activePage, setActivePage] = useState('page-santuario'); // Default to Santuario
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const handleTabClick = (sectionId: string) => {
-        if (!currentUser && sectionId !== 'home-section') {
-            setShowAuth(true); // Mostra a autenticação se o utilizador não estiver logado e clicar numa secção premium
-        } else if (sectionId === 'auth-section') {
-            setShowAuth(true);
-        }
-        else {
-            setActiveSection(sectionId);
-            setShowAuth(false);
+    const navigate = (pageId: string) => {
+        setActivePage(pageId);
+        if (window.innerWidth < 768) {
+            setIsMenuOpen(false);
         }
     };
 
     if (loading) {
         return (
-            <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1a] z-50">
-                <div className="text-center p-8 rounded-lg">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#a37e2c] mx-auto mb-4"></div>
-                    <p className="text-lg font-semibold font-cinzel text-[#a37e2c]">Despertando a Rota Pagã...</p>
-                </div>
+            <div className="fixed inset-0 flex items-center justify-center bg-[#0f0524]">
+                <div className="loader h-12 w-12 border-t-4 border-yellow-200 rounded-full animate-spin"></div>
             </div>
         );
     }
 
-    // Se o utilizador não estiver autenticado e o showAuth for verdadeiro, mostramos a página de autenticação
-    if (!currentUser && showAuth) {
-        return <AuthPage />;
+    if (!currentUser) {
+        return (
+            <>
+                <StarrySky />
+                <AuthPage />
+            </>
+        );
     }
 
+    const renderActivePage = () => {
+        switch (activePage) {
+            case 'page-santuario': return <SantuarioPage />;
+            case 'page-jornada': return <JornadaPage />;
+            case 'page-pantaculos': return <PantaculosPage />;
+            case 'page-forjador': return <ForjadorPage />;
+            case 'page-pilares': return <PilaresDietaPage />;
+            case 'page-compendio': return <CompendioPage />;
+            case 'page-sopros': return <SoprosPage />;
+            case 'page-roda': return <RodaDoAnoPage />;
+            case 'page-panteao': return <PanteaoPage />;
+            case 'page-galeria': return <GaleriaPage />;
+            case 'page-oraculo': return <OraclePage />;
+            case 'page-guardiao': return <GuardiaoPage />;
+            default: return <SantuarioPage />;
+        }
+    };
+
     return (
-        <div id="app-container">
-            <Header userDisplayName={
-                currentUser
-                ? <><strong>Guardião:</strong><br /><span className="text-xs text-gray-500">{currentUser.email}</span></>
-                : "Desperte o seu caminho"
-            } />
-            <NavBar activeSection={activeSection} onTabClick={handleTabClick} />
+        <div className="flex flex-col md:flex-row h-screen relative">
+            <StarrySky />
 
-            <main className="container mx-auto p-4 md:p-8">
-                {currentUser ? (
-                    <>
-                        <ContentSection id="main-section" isActive={activeSection === 'main-section'}>
-                           <PillarSection />
-                        </ContentSection>
+            <button
+                className="md:hidden fixed top-4 left-4 z-50 p-2 glass-effect rounded-md"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+                <i className="ph ph-list text-2xl text-white"></i>
+            </button>
 
-                        <ContentSection id="compendio-section" isActive={activeSection === 'compendio-section'}>
-                           <CompendioPage />
-                        </ContentSection>
+            <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                <Sidebar navigate={navigate} activePage={activePage} />
+            </div>
 
-                        <ContentSection id="jornada-section" isActive={activeSection === 'jornada-section'}>
-                            <JornadaSection />
-                        </ContentSection>
-
-                        <ContentSection id="pranayama-section" isActive={activeSection === 'pranayama-section'}>
-                            <SoprosDeVidaPage />
-                        </ContentSection>
-
-                        <ContentSection id="consultas-section" isActive={activeSection === 'consultas-section'}>
-                            <ServicesPage />
-                        </ContentSection>
-                    </>
-                ) : (
-                    // Se não houver utilizador, mostramos a HomePage
-                    <ContentSection id="home-section" isActive={true}>
-                        <HomePage />
-                    </ContentSection>
-                )}
+            <main className="flex-1 p-4 md:p-8 overflow-y-auto h-full z-10">
+                {renderActivePage()}
             </main>
         </div>
     );
