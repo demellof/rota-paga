@@ -10,6 +10,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+dev_server.log
 
 # Local .env files
 .env.local
@@ -27,4 +28,3 @@ pnpm-debug.log*
 # Operating System files
 .DS_Store
 Thumbs.db
-.env
