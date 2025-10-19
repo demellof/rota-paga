@@ -74,4 +74,3 @@ export const testApiConnection = () => {
         .then(data => console.log("API Connection Test Successful:", data))
         .catch(error => console.error("API Connection Test Failed:", error));
 };
-};
