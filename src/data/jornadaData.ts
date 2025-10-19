@@ -1,5 +1,6 @@
 export const jornadaData = [
     {
+        "numero": 1,
         "etapa": "Etapa 1: Despertar da Consciência",
         "cor_principal": "Verde Esmeralda",
         "chakra": "Muladhara (Raiz) & Ajna (Frontal)",
@@ -28,6 +29,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 2,
         "etapa": "Etapa 2: Semeando com Propósito",
         "cor_principal": "Amarelo Dourado",
         "chakra": "Svadhisthana (Sacral) & Anahata (Cardíaco)",
@@ -56,6 +58,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 3,
         "etapa": "Etapa 3: Transformação Resiliente",
         "cor_principal": "Vermelho Fogo",
         "chakra": "Manipura (Plexo Solar)",
@@ -84,6 +87,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 4,
         "etapa": "Etapa 4: Colheita Consciente",
         "cor_principal": "Rosa Quente",
         "chakra": "Anahata (Coração)",
@@ -112,6 +116,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 5,
         "etapa": "Etapa 5: Irradiando o Legado",
         "cor_principal": "Azul Royal",
         "chakra": "Vishuddha (Garganta)",
@@ -140,6 +145,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 6,
         "etapa": "Etapa 6: Introspecção Curativa",
         "cor_principal": "Roxo/Violeta",
         "chakra": "Ajna (Frontal)",
@@ -167,6 +173,7 @@ export const jornadaData = [
         ]
     },
     {
+        "numero": 7,
         "etapa": "Etapa 7: União Transcendental",
         "cor_principal": "Branco/Dourado Luminoso",
         "chakra": "Sahasrara (Coroa)",
