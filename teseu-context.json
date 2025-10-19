@@ -1,0 +1,109 @@
+{
+  "projectOverview": {
+    "name": "Rota Pagã",
+    "description": "Uma aplicação web de guia holístico pessoal, construída como um Progressive Web App (PWA). O projeto utiliza React para o frontend e Firebase para autenticação e banco de dados. O objetivo é fornecer uma plataforma interativa para os usuários explorarem conteúdos relacionados à espiritualidade pagã.",
+    "type": "Single Page Application (SPA) / Progressive Web App (PWA)"
+  },
+  "techStack": {
+    "frontend": "React 19, TypeScript",
+    "buildTool": "Vite",
+    "styling": "Tailwind CSS",
+    "backendServices": {
+      "provider": "Firebase",
+      "services": ["Authentication", "Firestore"]
+    },
+    "pwa": "Configurado através do `vite-plugin-pwa`."
+  },
+  "fileStructure": [
+    "./postcss.config.js",
+    "./src/App.tsx",
+    "./src/data/astrologyData.ts",
+    "./src/data/seasonalHerbData.ts",
+    "./src/data/chakraData.ts",
+    "./src/data/pranayamaData.ts",
+    "./src/data/pillarData.ts",
+    "./src/data/jornadaFlorescerData.ts",
+    "./src/data/crystalData.ts",
+    "./src/data/servicesData.ts",
+    "./src/data/jornadaData.ts",
+    "./src/index.css",
+    "./src/pages/HerbarioPage.tsx",
+    "./src/pages/RodaDoAnoPage.tsx",
+    "./src/pages/PanteaoPage.tsx",
+    "./src/pages/JornadaPage.tsx",
+    "./src/pages/CompendioPage.tsx",
+    "./src/pages/SantuarioPage.tsx",
+    "./src/pages/CristaisPage.tsx",
+    "./src/pages/PantaculosPage.tsx",
+    "./src/pages/ForjadorPage.tsx",
+    "./src/pages/PilaresDietaPage.tsx",
+    "./src/pages/SigilosPage.tsx",
+    "./src/pages/GaleriaPage.tsx",
+    "./src/pages/OraclePage.tsx",
+    "./src/pages/AuthPage.tsx",
+    "./src/pages/SoprosPage.tsx",
+    "./src/pages/GuardiaoPage.tsx",
+    "./src/services/firestore.ts",
+    "./src/styles/main.css",
+    "./src/styles/oracle.css",
+    "./src/context/AuthContext.tsx",
+    "./src/firebase.ts",
+    "./src/index.tsx",
+    "./src/components/JornadaSection.tsx",
+    "./src/components/BoxBreathingGuide.tsx",
+    "./src/components/ContentSection.tsx",
+    "./src/components/ErrorBoundary.tsx",
+    "./src/components/PremiumContent.tsx",
+    "./src/components/JornadaStep.tsx",
+    "./src/components/layout/StarrySky.tsx",
+    "./src/components/layout/Sidebar.tsx",
+    "./tailwind.config.js",
+    "./package.json",
+    "./README.md",
+    "./file_structure.txt",
+    "./dev_server.log",
+    "./index.html",
+    "./.gitignore",
+    "./vite.config.ts",
+    "./package-lock.json",
+    "./tsconfig.json",
+    "./metadata.json"
+  ],
+  "architecture": {
+    "entryPoint": "O ponto de entrada é `src/index.tsx`, que renderiza o componente principal `App.tsx`. A aplicação é envolvida por um `AuthProvider` para gerenciamento de autenticação e um `ErrorBoundary` para captura de erros.",
+    "routing": {
+      "type": "Custom, baseado em estado do React.",
+      "implementation": "O arquivo `src/App.tsx` utiliza um estado `activePage` e uma grande instrução `switch` para renderizar diferentes componentes de página. Não há uso de uma biblioteca de roteamento padrão como `react-router-dom`.",
+      "notes": "Este é um ponto crítico para refatoração."
+    },
+    "stateManagement": "O estado de autenticação global é gerenciado pelo `AuthContext` (`src/context/AuthContext.tsx`). O estado local dos componentes parece ser gerenciado com os hooks `useState` do React.",
+    "componentModel": "A estrutura de componentes é dividida em `src/pages` (componentes de nível superior para cada 'página') e `src/components` (componentes reutilizáveis, incluindo um subdiretório `layout`).",
+    "dataHandling": {
+      "staticData": "Há um diretório `src/data` que contém múltiplos arquivos TypeScript exportando dados estáticos (ex: `crystalData.ts`, `jornadaData.ts`).",
+      "dynamicData": "A aplicação está configurada para usar o Firestore (`src/firebase.ts` e `src/services/firestore.ts`), presumivelmente para dados de usuário e conteúdo dinâmico."
+    },
+    "configuration": "A configuração do Vite (`vite.config.ts`) inclui a configuração do PWA e a definição de variáveis de ambiente, como uma chave de API para o Gemini."
+  },
+  "refactoringPoints": [
+    {
+      "area": "Routing",
+      "suggestion": "Substituir o sistema de roteamento customizado baseado em `switch` por uma biblioteca padrão como `react-router-dom`. Isso melhorará a manutenibilidade, habilitará URLs diretas para cada página e simplificará a lógica de navegação.",
+      "priority": "Alta"
+    },
+    {
+      "area": "Data Fetching",
+      "suggestion": "Padronizar a forma como os dados são buscados do Firestore. Considerar o uso de uma biblioteca como `react-query` (TanStack Query) para gerenciar o estado do servidor (fetching, caching, revalidação), o que simplificaria os componentes e melhoraria a experiência do usuário.",
+      "priority": "Média"
+    },
+    {
+      "area": "Componentização",
+      "suggestion": "Analisar as páginas em `src/pages` para identificar lógica e UI repetidas que possam ser extraídas para componentes reutilizáveis em `src/components`, reduzindo a duplicação de código.",
+      "priority": "Média"
+    },
+    {
+      "area": "Gerenciamento de Dados Estáticos",
+      "suggestion": "Avaliar se os dados estáticos em `src/data` não seriam mais bem gerenciados no Firestore. Isso permitiria que o conteúdo fosse atualizado sem a necessidade de um novo deploy do código.",
+      "priority": "Baixa"
+    }
+  ]
+}

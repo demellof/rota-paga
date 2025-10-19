@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../firebase';
-import { UserProfile, createUserProfileDocument, getUserProfile } from '../services/firestore';
+import { createUserProfileDocument } from '../services/firestore';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -10,10 +10,9 @@ import {
     signInWithPopup,
 } from 'firebase/auth';
 
-// Define the shape of the context data
+// A interface agora é mais simples: não inclui mais userProfile.
 interface AuthContextType {
     currentUser: User | null;
-    userProfile: UserProfile | null;
     loading: boolean;
     signup: (email: string, pass: string) => Promise<any>;
     login: (email: string, pass: string) => Promise<any>;
@@ -21,10 +20,8 @@ interface AuthContextType {
     signInWithGoogle: () => Promise<any>;
 }
 
-// Create the context with a default value
 const AuthContext = createContext<AuthContextType>({
     currentUser: null,
-    userProfile: null,
     loading: true,
     signup: () => new Promise(() => {}),
     login: () => new Promise(() => {}),
@@ -32,48 +29,29 @@ const AuthContext = createContext<AuthContextType>({
     signInWithGoogle: () => new Promise(() => {}),
 });
 
-// Custom hook to use the auth context easily in other components
 export function useAuth() {
     return useContext(AuthContext);
 }
 
-// Create the provider component
-interface AuthProviderProps {
-    children: React.ReactNode;
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: React.PropsWithChildren<{}>) {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
-    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            try {
-                if (user) {
-                    // If the user is logged in, create/get their profile from Firestore
-                    await createUserProfileDocument(user);
-                    const profile = await getUserProfile(user.uid);
-                    setUserProfile(profile);
-                } else {
-                    // If the user is logged out, clear the profile
-                    setUserProfile(null);
-                }
-                setCurrentUser(user);
-            } catch (error) {
-                console.error("Error during auth state change:", error);
-                // If profile creation/fetching fails, we should still treat the user as logged in.
-                // The user object from onAuthStateChanged is the source of truth for auth status.
-                // We just might not have a profile in our DB.
-                setCurrentUser(user);
-                setUserProfile(null);
-            } finally {
-                // VERY IMPORTANT: Always set loading to false, even if there's an error.
-                // This prevents the app from getting stuck on the loading screen.
-                setLoading(false);
-            }
-        });
+            setCurrentUser(user);
 
+            // A criação do perfil ainda acontece aqui, mas o resultado não é armazenado no estado deste contexto.
+            if (user) {
+                try {
+                    await createUserProfileDocument(user);
+                } catch (error) {
+                    console.error("Error creating profile document:", error);
+                }
+            }
+
+            setLoading(false);
+        });
         return unsubscribe;
     }, []);
 
@@ -96,7 +74,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const value = {
         currentUser,
-        userProfile,
         loading,
         signup,
         login,
