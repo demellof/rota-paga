@@ -1,89 +1,38 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../firebase';
-import { createUserProfileDocument } from '../services/firestore';
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    GoogleAuthProvider,
-    signInWithPopup,
-} from 'firebase/auth';
 
-// A interface agora é mais simples: não inclui mais userProfile.
+// Mock user for testing purposes
+const mockUser = {
+    uid: 'test-user',
+    email: 'test@example.com',
+    displayName: 'Test User',
+};
+
+// Define the shape of the context data
 interface AuthContextType {
-    currentUser: User | null;
-    loading: boolean;
-    signup: (email: string, pass: string) => Promise<any>;
-    login: (email: string, pass: string) => Promise<any>;
-    logout: () => Promise<any>;
-    signInWithGoogle: () => Promise<any>;
+    currentUser: typeof mockUser | null;
 }
 
-const AuthContext = createContext<AuthContextType>({
-    currentUser: null,
-    loading: true,
-    signup: () => new Promise(() => {}),
-    login: () => new Promise(() => {}),
-    logout: () => new Promise(() => {}),
-    signInWithGoogle: () => new Promise(() => {}),
-});
+// Create the context with a default value
+const AuthContext = createContext<AuthContextType>({ currentUser: null });
 
-export function useAuth() {
+// Custom hook to use the auth context
+export const useAuth = () => {
     return useContext(AuthContext);
-}
+};
 
-export function AuthProvider({ children }: React.PropsWithChildren<{}>) {
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+// Provider component
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [currentUser, setCurrentUser] = useState<typeof mockUser | null>(null);
 
+    // Simulate a logged-in user
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setCurrentUser(user);
-
-            // A criação do perfil ainda acontece aqui, mas o resultado não é armazenado no estado deste contexto.
-            if (user) {
-                try {
-                    await createUserProfileDocument(user);
-                } catch (error) {
-                    console.error("Error creating profile document:", error);
-                }
-            }
-
-            setLoading(false);
-        });
-        return unsubscribe;
+        console.log('[MOCK] Setting mock user in AuthContext');
+        setCurrentUser(mockUser);
     }, []);
-
-    function signup(email: string, pass: string) {
-        return createUserWithEmailAndPassword(auth, email, pass);
-    }
-
-    function login(email: string, pass: string) {
-        return signInWithEmailAndPassword(auth, email, pass);
-    }
-
-    function logout() {
-        return signOut(auth);
-    }
-
-    function signInWithGoogle() {
-        const provider = new GoogleAuthProvider();
-        return signInWithPopup(auth, provider);
-    }
 
     const value = {
         currentUser,
-        loading,
-        signup,
-        login,
-        logout,
-        signInWithGoogle,
     };
 
-    return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
-    );
-}
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

@@ -1,0 +1,74 @@
+{
+  "projectName": "Refatoração Rota Pagã",
+  "objective": "Migrar funcionalidades do 'Portal Grimório' legado para a nova aplicação 'Rota Pagã', estabelecendo uma arquitetura moderna, escalável e de fácil manutenção. Este contexto será usado para guiar o agente 'Teseu' no auxílio à refatoração.",
+  "techStack": {
+    "frontend": "React, TypeScript, Vite",
+    "dataFetching": "TanStack Query",
+    "styling": "Tailwind CSS v4",
+    "backend": "Firebase (Firestore)"
+  },
+  "keyConcepts": {
+    "portalGrimorio": "A aplicação legada que está sendo substituída.",
+    "rotaPaga": "A nova aplicação que está sendo construída.",
+    "panteao": "A primeira funcionalidade migrada com sucesso, que serve como um blueprint para a arquitetura.",
+    "forjadorDeSigilos": "A atual e complexa funcionalidade em desenvolvimento, concebida como um hub central para a criação e gestão de sigilos."
+  },
+  "projectHistory": [
+    {
+      "milestone": "Migração da Funcionalidade Panteão",
+      "status": "Concluído",
+      "description": "A funcionalidade 'Panteão' foi migrada com sucesso, estabelecendo um padrão arquitetônico claro com React, TypeScript e TanStack Query. Serviu como prova de conceito e modelo para migrações subsequentes.",
+      "outcome": "Estabeleceu um padrão reutilizável para serviços, hooks de dados (useQuery) e componentes."
+    },
+    {
+      "milestone": "Definição da Funcionalidade Forjador de Sigilos",
+      "status": "Concluído",
+      "description": "Definição dos requisitos para uma nova e ambiciosa funcionalidade: o 'Forjador de Sigilos'.",
+      "components": [
+        {
+          "name": "O Altar da Criação",
+          "description": "Uma ferramenta interativa para os usuários criarem sigilos com base em uma intenção e uma influência planetária."
+        },
+        {
+          "name": "A Galeria dos Selos",
+          "description": "Uma área de exibição para sigilos criados pelo usuário, sigilos pré-existentes e uma coleção de selos antigos."
+        }
+      ]
+    },
+    {
+      "milestone": "Implementação do Forjador de Sigilos",
+      "status": "Em Andamento (Lógica Completa, UI Quebrada)",
+      "implementationPlan": [
+        { "step": 1, "task": "Estruturar Dados e Assets", "status": "Concluído" },
+        { "step": 2, "task": "Adaptar Camada de Serviço (Firestore)", "status": "Concluído" },
+        { "step": 3, "task": "Implementar Hooks de Dados (TanStack Query)", "status": "Concluído" },
+        { "step": 4, "task": "Construir a UI (Componente React)", "status": "Concluído" },
+        { "step": 5, "task": "Integrar e Testar", "status": "Em Andamento" }
+      ],
+      "developmentLog": {
+        "summary": "A etapa final de verificação se transformou em um grande esforço de depuração para iniciar o servidor de desenvolvimento Vite e fazer a lógica da funcionalidade funcionar corretamente.",
+        "debuggingChronology": [
+          { "issue": "ERR_CONNECTION_REFUSED", "hypothesis": "Falha de conexão inicial.", "resolution": "N/A, levou a uma investigação mais aprofundada." },
+          { "issue": "Servidor travado", "hypothesis": "vite-plugin-pwa buscando ícones externos.", "resolution": "O plugin foi comentado. Não resolveu o problema principal." },
+          { "issue": "Servidor travado", "hypothesis": "Conflito no PostCSS entre autoprefixer e @tailwindcss/postcss.", "resolution": "postcss.config.js foi corrigido. Não resolveu o problema principal." },
+          { "issue": "Crash do servidor", "hypothesis": "Uso de `__dirname` no vite.config.ts (incompatibilidade com Módulos ES).", "resolution": "Substituído por `import.meta.url`. Não resolveu o problema principal." },
+          { "issue": "Crash do servidor", "hypothesis": "Dependências npm corrompidas.", "resolution": "node_modules e package-lock.json foram deletados, depois `npm install` foi executado. Não resolveu o problema principal." },
+          { "issue": "Crash do servidor", "hypothesis": "Variável de ambiente GEMINI_API_KEY ausente no arquivo .env.", "resolution": "Um arquivo .env de placeholder foi criado. Isso permitiu que o servidor iniciasse." },
+          { "issue": "Conflito de porta", "hypothesis": "Processos zumbis ocupando a porta.", "resolution": "Os processos foram terminados." },
+          { "issue": "Dados incorretos na UI", "hypothesis": "O seletor de planetas estava sendo populado com dados errados.", "resolution": "Um `planetData.ts` correto foi criado e o componente foi atualizado para usá-lo. Os testes passaram após isso." }
+        ]
+      }
+    }
+  ],
+  "currentChallenge": {
+    "problem": "O CSS não está sendo renderizado corretamente na página 'Forjador de Sigilos', resultando em uma UI visualmente quebrada, apesar da lógica e dos testes estarem passando.",
+    "screenshotAnalysis": "A imagem fornecida mostra o menu de navegação principal, não a página quebrada em si, mas confirma a estética geral. A última execução do teste produziu uma captura de tela de uma página quebrada (não fornecida neste bloco de contexto, mas conhecida pelo resumo).",
+    "rootCauseHypothesis": "Integração incorreta do Tailwind CSS v4. Atualmente, ele está configurado como um plugin PostCSS em `postcss.config.js` em vez de um plugin Vite (`@tailwindcss/vite`) em `vite.config.ts`, conforme recomendado pelo usuário e pela documentação oficial para a v4.",
+    "nextAction": "Refatorar a configuração de build para usar `@tailwindcss/vite` e remover a configuração incorreta do PostCSS."
+  },
+  "agentDirectives": {
+    "agentName": "Teseu",
+    "primaryGoal": "Auxiliar na refatoração da 'Rota Pagã' fornecendo código, análises e completando tarefas de desenvolvimento.",
+    "immediateTask": "Corrigir a integração do Tailwind CSS para resolver o problema de renderização na página 'Forjador de Sigilos'."
+  }
+}
