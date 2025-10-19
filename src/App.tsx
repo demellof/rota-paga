@@ -1,42 +1,36 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
+import AuthPage from './pages/AuthPage';
 
 // Layout Components
 import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
 
 // Page Components
-import HomePage from './pages/HomePage';
-import HerbarioPage from './pages/HerbarioPage';
-import RodaDoAnoPage from './pages/RodaDoAnoPage';
-import PanteaoPage from './pages/PanteaoPage';
-import JornadaPage from './pages/JornadaPage';
-import CompendioPage from './pages/CompendioPage';
 import SantuarioPage from './pages/SantuarioPage';
-import CristaisPage from './pages/CristaisPage';
+import JornadaPage from './pages/JornadaPage';
 import PantaculosPage from './pages/PantaculosPage';
 import ForjadorPage from './pages/ForjadorPage';
 import PilaresDietaPage from './pages/PilaresDietaPage';
-import SigilosPage from './pages/SigilosPage';
+import CompendioPage from './pages/CompendioPage';
+import SoprosPage from './pages/SoprosPage';
+import RodaDoAnoPage from './pages/RodaDoAnoPage';
+import PanteaoPage from './pages/PanteaoPage';
 import GaleriaPage from './pages/GaleriaPage';
 import OraclePage from './pages/OraclePage';
-import AuthPage from './pages/AuthPage';
-import SoprosPage from './pages/SoprosPage';
 import GuardiaoPage from './pages/GuardiaoPage';
 
-// Um layout para as páginas protegidas que inclui a Sidebar e o conteúdo principal
-const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <div className="flex flex-col md:flex-row h-screen relative">
-        <Sidebar />
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto h-full z-10">
-            {children}
-        </main>
-    </div>
-);
-
-function App() {
+const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
+    const [activePage, setActivePage] = useState('page-santuario'); // Default to Santuario
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const navigate = (pageId: string) => {
+        setActivePage(pageId);
+        if (window.innerWidth < 768) {
+            setIsMenuOpen(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -46,42 +40,53 @@ function App() {
         );
     }
 
+    if (!currentUser) {
+        return (
+            <>
+                <StarrySky />
+                <AuthPage />
+            </>
+        );
+    }
+
+    const renderActivePage = () => {
+        switch (activePage) {
+            case 'page-santuario': return <SantuarioPage />;
+            case 'page-jornada': return <JornadaPage />;
+            case 'page-pantaculos': return <PantaculosPage />;
+            case 'page-forjador': return <ForjadorPage />;
+            case 'page-pilares': return <PilaresDietaPage />;
+            case 'page-compendio': return <CompendioPage />;
+            case 'page-sopros': return <SoprosPage />;
+            case 'page-roda': return <RodaDoAnoPage />;
+            case 'page-panteao': return <PanteaoPage />;
+            case 'page-galeria': return <GaleriaPage />;
+            case 'page-oraculo': return <OraclePage />;
+            case 'page-guardiao': return <GuardiaoPage />;
+            default: return <SantuarioPage />;
+        }
+    };
+
     return (
-        <>
+        <div className="flex flex-col md:flex-row h-screen relative">
             <StarrySky />
-            <Routes>
-                {!currentUser ? (
-                    // Se não houver usuário, a única rota é a de autenticação
-                    <Route path="*" element={<AuthPage />} />
-                ) : (
-                    // Se houver usuário, renderiza as rotas da aplicação principal
-                    <Route path="/*" element={
-                        <MainLayout>
-                            <Routes>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/herbario" element={<HerbarioPage />} />
-                                <Route path="/roda-do-ano" element={<RodaDoAnoPage />} />
-                                <Route path="/panteao" element={<PanteaoPage />} />
-                                <Route path="/jornada" element={<JornadaPage />} />
-                                <Route path="/compendio" element={<CompendioPage />} />
-                                <Route path="/santuario" element={<SantuarioPage />} />
-                                <Route path="/cristais" element={<CristaisPage />} />
-                                <Route path="/pantaculos" element={<PantaculosPage />} />
-                                <Route path="/forjador" element={<ForjadorPage />} />
-                                <Route path="/pilares-dieta" element={<PilaresDietaPage />} />
-                                <Route path="/sigilos" element={<SigilosPage />} />
-                                <Route path="/galeria" element={<GaleriaPage />} />
-                                <Route path="/oracle" element={<OraclePage />} />
-                                <Route path="/sopros" element={<SoprosPage />} />
-                                <Route path="/guardiao" element={<GuardiaoPage />} />
-                                <Route path="*" element={<div>Página não encontrada</div>} />
-                            </Routes>
-                        </MainLayout>
-                    } />
-                )}
-            </Routes>
-        </>
+
+            <button
+                className="md:hidden fixed top-4 left-4 z-50 p-2 glass-effect rounded-md"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+                <i className="ph ph-list text-2xl text-white"></i>
+            </button>
+
+            <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                <Sidebar navigate={navigate} activePage={activePage} />
+            </div>
+
+            <main className="flex-1 p-4 md:p-8 overflow-y-auto h-full z-10">
+                {renderActivePage()}
+            </main>
+        </div>
     );
-}
+};
 
 export default App;

@@ -1,38 +1,112 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
-// Mock user for testing purposes
-const mockUser = {
-    uid: 'test-user',
-    email: 'test@example.com',
-    displayName: 'Test User',
-};
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from '../firebase';
+import { UserProfile, createUserProfileDocument, getUserProfile } from '../services/firestore';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth';
 
 // Define the shape of the context data
 interface AuthContextType {
-    currentUser: typeof mockUser | null;
+    currentUser: User | null;
+    userProfile: UserProfile | null;
+    loading: boolean;
+    signup: (email: string, pass: string) => Promise<any>;
+    login: (email: string, pass: string) => Promise<any>;
+    logout: () => Promise<any>;
+    signInWithGoogle: () => Promise<any>;
 }
 
 // Create the context with a default value
-const AuthContext = createContext<AuthContextType>({ currentUser: null });
+const AuthContext = createContext<AuthContextType>({
+    currentUser: null,
+    userProfile: null,
+    loading: true,
+    signup: () => new Promise(() => {}),
+    login: () => new Promise(() => {}),
+    logout: () => new Promise(() => {}),
+    signInWithGoogle: () => new Promise(() => {}),
+});
 
-// Custom hook to use the auth context
-export const useAuth = () => {
+// Custom hook to use the auth context easily in other components
+export function useAuth() {
     return useContext(AuthContext);
-};
+}
 
-// Provider component
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<typeof mockUser | null>(null);
+// Create the provider component
+interface AuthProviderProps {
+    children: React.ReactNode;
+}
 
-    // Simulate a logged-in user
+export function AuthProvider({ children }: AuthProviderProps) {
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        console.log('[MOCK] Setting mock user in AuthContext');
-        setCurrentUser(mockUser);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            try {
+                if (user) {
+                    // If the user is logged in, create/get their profile from Firestore
+                    await createUserProfileDocument(user);
+                    const profile = await getUserProfile(user.uid);
+                    setUserProfile(profile);
+                } else {
+                    // If the user is logged out, clear the profile
+                    setUserProfile(null);
+                }
+                setCurrentUser(user);
+            } catch (error) {
+                console.error("Error during auth state change:", error);
+                // If profile creation/fetching fails, we should still treat the user as logged in.
+                // The user object from onAuthStateChanged is the source of truth for auth status.
+                // We just might not have a profile in our DB.
+                setCurrentUser(user);
+                setUserProfile(null);
+            } finally {
+                // VERY IMPORTANT: Always set loading to false, even if there's an error.
+                // This prevents the app from getting stuck on the loading screen.
+                setLoading(false);
+            }
+        });
+
+        return unsubscribe;
     }, []);
+
+    function signup(email: string, pass: string) {
+        return createUserWithEmailAndPassword(auth, email, pass);
+    }
+
+    function login(email: string, pass: string) {
+        return signInWithEmailAndPassword(auth, email, pass);
+    }
+
+    function logout() {
+        return signOut(auth);
+    }
+
+    function signInWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        return signInWithPopup(auth, provider);
+    }
 
     const value = {
         currentUser,
+        userProfile,
+        loading,
+        signup,
+        login,
+        logout,
+        signInWithGoogle,
     };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+    return (
+        <AuthContext.Provider value={value}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
+}
