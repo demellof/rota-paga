@@ -1,33 +1,37 @@
-import React from 'react';
+// src/pages/SoprosPage.tsx
 
-const SoprosPage: React.FC = () => {
-    return (
-        <section className="content-panel p-6">
-            <h1 className="page-title text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-blue-400">Sopros de Vida</h1>
-            <p className="page-subtitle">Guia de Pranayamas por Nível de Proficiência.</p>
+import React, { useState } from 'react';
+import { pranayamaData, Pranayama } from '../data/pranayamaData';
+import BreathingGuide from '../components/guidance/BreathingGuide';
 
-            <div className="content-card glass-effect mb-4">
-                <h2 className="text-2xl font-bold mb-4 text-green-400">Nível 1: Fundacional (Iniciante)</h2>
-                <div className="mb-3">
-                    <h3 className="text-lg font-semibold text-white">Dirga Pranayama (Respiração Completa)</h3>
-                    <p className="text-sm"><strong>Efeito:</strong> Calmante/Base. Ensina o uso total da capacidade pulmonar.</p>
-                </div>
+const SoprosPage = () => {
+  const [selectedPranayama, setSelectedPranayama] = useState<Pranayama | null>(null);
+
+  if (selectedPranayama) {
+    return <BreathingGuide pranayama={selectedPranayama} onBack={() => setSelectedPranayama(null)} />;
+  }
+
+  return (
+    <section className="p-4 md:p-6">
+      <h1 className="font-fantasy text-4xl text-yellow-200 mb-8 text-center">Sopros de Vida: Guias de Pranayama</h1>
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        {pranayamaData.map(pranayama => (
+          <div key={pranayama.id} className="bg-gray-800/50 border border-purple-400/20 rounded-xl shadow-lg p-6 flex flex-col justify-between hover:border-purple-400/50 transition-all">
+            <div>
+              <h2 className="text-2xl font-fantasy text-yellow-300 mb-2">{pranayama.nome}</h2>
+              <p className="text-gray-400 mb-4">{pranayama.descricao}</p>
             </div>
-             <div className="content-card glass-effect mb-4">
-                <h2 className="text-2xl font-bold mb-4 text-yellow-400">Nível 2: Equilíbrio e Purificação (Intermediário)</h2>
-                 <div className="mb-3">
-                    <h3 className="text-lg font-semibold text-white">Nadi Shodhana (Narinas Alternadas)</h3>
-                    <p className="text-sm"><strong>Efeito:</strong> Equilibrante/Calmante. Reduz ansiedade e equilibra os hemisférios.</p>
-                </div>
-            </div>
-             <div className="content-card glass-effect">
-                <h2 className="text-2xl font-bold mb-4 text-orange-400">Nível 3: Energização e Expansão (Avançado)</h2>
-                <div className="warning-box text-sm">
-                    <strong>Atenção:</strong> Estas técnicas devem ser praticadas com cautela e preferencialmente com orientação.
-                </div>
-            </div>
-        </section>
-    );
+            <button
+              onClick={() => setSelectedPranayama(pranayama)}
+              className="mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg self-start"
+            >
+              Iniciar Prática
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default SoprosPage;
