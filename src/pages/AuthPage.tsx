@@ -37,12 +37,12 @@ const AuthPage: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-[#111827]">
-            <div className="w-full max-w-md p-8 space-y-6 rounded-lg shadow-lg" style={{background: 'rgba(31, 41, 55, 0.5)', backdropFilter: 'blur(10px)'}}>
-                <h2 className="text-2xl font-bold text-center font-fantasy text-white">
+        <div className="flex items-center justify-center min-h-screen">
+            <div className="content-panel w-full max-w-md">
+                <h2 className="text-3xl text-center mb-6">
                     {isLogin ? 'Acessar a Rota Pagã' : 'Criar Conta'}
                 </h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="email" className="text-sm font-bold text-gray-400 block">Email</label>
                         <input
