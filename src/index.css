@@ -2,43 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos Base do Grimório Virtual */
 @layer base {
     html, body {
-        background-color: #0d0a1a;
-        color: #e0e0e0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @apply bg-base-bg text-gray-200;
+        font-family: 'Inter', sans-serif;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'Cinzel', serif; /* Uma fonte com tema de fantasia */
-        color: #f5d76e; /* Dourado místico */
-    }
-}
-
-/* Componentes customizados */
-@layer components {
-    .content-panel {
-        @apply bg-black/60 backdrop-blur-md border border-purple-900/50 rounded-lg p-6 shadow-2xl shadow-purple-900/20;
-    }
-
-    .astro-input {
-        @apply w-full bg-purple-900/20 border border-purple-700/50 rounded-md px-3 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all;
-    }
-
-    .calculate-button {
-        @apply w-full bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-md shadow-lg transition-transform transform hover:scale-105 disabled:bg-gray-600 disabled:cursor-not-allowed;
-    }
-
-    .warning-box {
-        @apply bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-md;
-    }
-
-    .card {
-         @apply bg-purple-900/10 border border-purple-800/60 rounded-lg p-4;
-    }
-
-    .loader {
-        @apply animate-spin rounded-full border-t-2 border-b-2 border-purple-300;
+        @apply font-fantasy text-mystic-gold;
     }
 }

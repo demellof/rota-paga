@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
 
 // Layout Components
+import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
 
 // Page Components
@@ -41,7 +42,10 @@ const App: React.FC = () => {
 
     if (!currentUser) {
         return (
-            <AuthPage />
+            <>
+                <StarrySky />
+                <AuthPage />
+            </>
         );
     }
 
@@ -65,6 +69,8 @@ const App: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen relative">
+            <StarrySky />
+
             <button
                 className="md:hidden fixed top-4 left-4 z-50 p-2 glass-effect rounded-md"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}

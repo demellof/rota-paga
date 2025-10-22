@@ -23,26 +23,6 @@ const OraclePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    /*
-    // useEffect is temporarily commented out to prevent a Vite dev server crash.
-    // This allows the prokeralaService.ts to be committed without breaking the app.
-    // The underlying issue appears to be with the Vite environment, not the service itself.
-    useEffect(() => {
-        const testApi = async () => {
-            try {
-                // Use dynamic import to lazy-load the service client-side.
-                const { fetchGeoDetails } = await import('../services/prokeralaService');
-                console.log("Testing Prokerala API...");
-                const data = await fetchGeoDetails("São Paulo");
-                console.log("Prokerala API test successful:", data);
-            } catch (err) {
-                console.error("Prokerala API test failed:", err);
-            }
-        };
-        testApi();
-    }, []);
-    */
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
