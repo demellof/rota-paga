@@ -5,8 +5,10 @@ import AuthPage from './pages/AuthPage';
 // Layout Components
 import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
+import AudioPlayer from './components/layout/AudioPlayer';
 
 // Page Components
+import HomePage from './pages/HomePage';
 import SantuarioPage from './pages/SantuarioPage';
 import JornadaPage from './pages/JornadaPage';
 import PantaculosPage from './pages/PantaculosPage';
@@ -22,7 +24,7 @@ import GuardiaoPage from './pages/GuardiaoPage';
 
 const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
-    const [activePage, setActivePage] = useState('page-santuario'); // Default to Santuario
+    const [activePage, setActivePage] = useState('page-home'); // Default to Home
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navigate = (pageId: string) => {
@@ -51,6 +53,7 @@ const App: React.FC = () => {
 
     const renderActivePage = () => {
         switch (activePage) {
+            case 'page-home': return <HomePage />;
             case 'page-santuario': return <SantuarioPage />;
             case 'page-jornada': return <JornadaPage />;
             case 'page-pantaculos': return <PantaculosPage />;
@@ -69,7 +72,8 @@ const App: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen relative">
-            <StarrySky />
+            <AudioPlayer />
+            {activePage !== 'page-home' && <StarrySky />}
 
             <button
                 className="md:hidden fixed top-4 left-4 z-50 p-2 glass-effect rounded-md"
@@ -78,11 +82,13 @@ const App: React.FC = () => {
                 <i className="ph ph-list text-2xl text-white"></i>
             </button>
 
-            <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-                <Sidebar navigate={navigate} activePage={activePage} />
-            </div>
+            {activePage !== 'page-home' && (
+                <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                    <Sidebar navigate={navigate} activePage={activePage} />
+                </div>
+            )}
 
-            <main className="flex-1 p-4 md:p-8 overflow-y-auto h-full z-10">
+            <main className={`flex-1 overflow-y-auto h-full z-10 ${activePage !== 'page-home' ? 'p-4 md:p-8' : ''}`}>
                 {renderActivePage()}
             </main>
         </div>

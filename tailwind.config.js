@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'radial-gradient': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
+      },
+      fontFamily: {
+        'fantasy': ['"Cinzel Decorative"', 'serif'],
+      },
+    },
   },
   plugins: [],
 }
