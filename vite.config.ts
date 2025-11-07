@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
       plugins: [
         VitePWA({
           registerType: 'autoUpdate',
+          workbox: {
+            skipWaiting: true,
+          },
           manifest: {
             name: 'Rota Pagã',
             short_name: 'RotaPagã',
