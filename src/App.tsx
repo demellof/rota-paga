@@ -7,6 +7,7 @@ import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
 
 // Page Components
+import HomePage from './pages/HomePage';
 import SantuarioPage from './pages/SantuarioPage';
 import JornadaPage from './pages/JornadaPage';
 import PantaculosPage from './pages/PantaculosPage';
@@ -22,7 +23,7 @@ import GuardiaoPage from './pages/GuardiaoPage';
 
 const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
-    const [activePage, setActivePage] = useState('page-santuario'); // Default to Santuario
+    const [activePage, setActivePage] = useState('page-home'); // Default to Home
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navigate = (pageId: string) => {
@@ -51,6 +52,7 @@ const App: React.FC = () => {
 
     const renderActivePage = () => {
         switch (activePage) {
+            case 'page-home': return <HomePage />;
             case 'page-santuario': return <SantuarioPage />;
             case 'page-jornada': return <JornadaPage />;
             case 'page-pantaculos': return <PantaculosPage />;
@@ -69,7 +71,7 @@ const App: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen relative">
-            <StarrySky />
+            {activePage !== 'page-home' && <StarrySky />}
 
             <button
                 className="md:hidden fixed top-4 left-4 z-50 p-2 glass-effect rounded-md"
@@ -82,7 +84,7 @@ const App: React.FC = () => {
                 <Sidebar navigate={navigate} activePage={activePage} />
             </div>
 
-            <main className="flex-1 p-4 md:p-8 overflow-y-auto h-full z-10">
+            <main className={`flex-1 overflow-y-auto h-full z-10 ${activePage !== 'page-home' ? 'p-4 md:p-8' : ''}`}>
                 {renderActivePage()}
             </main>
         </div>
