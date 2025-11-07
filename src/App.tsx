@@ -5,6 +5,7 @@ import AuthPage from './pages/AuthPage';
 // Layout Components
 import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
+import AudioPlayer from './components/layout/AudioPlayer';
 
 // Page Components
 import HomePage from './pages/HomePage';
@@ -71,6 +72,7 @@ const App: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen relative">
+            <AudioPlayer />
             {activePage !== 'page-home' && <StarrySky />}
 
             <button
