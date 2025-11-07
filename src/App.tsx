@@ -80,9 +80,11 @@ const App: React.FC = () => {
                 <i className="ph ph-list text-2xl text-white"></i>
             </button>
 
-            <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-                <Sidebar navigate={navigate} activePage={activePage} />
-            </div>
+            {activePage !== 'page-home' && (
+                <div className={`fixed md:relative top-0 left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+                    <Sidebar navigate={navigate} activePage={activePage} />
+                </div>
+            )}
 
             <main className={`flex-1 overflow-y-auto h-full z-10 ${activePage !== 'page-home' ? 'p-4 md:p-8' : ''}`}>
                 {renderActivePage()}
