@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { navigationData } from '../../data/navigationData';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface SidebarProps {
     navigate: (pageId: string) => void;
     activePage: string;
 }
+
+const grimoireLinks = [
+    { id: 'page-santuario', label: 'Santuário (Início)', color: 'book-color-1' },
+    { id: 'page-jornada', label: 'Jornada Florescer', color: 'book-color-2' },
+    { id: 'page-pantaculos', label: 'Pantáculos Planetários', color: 'book-color-3' },
+    { id: 'page-pilares', label: 'Pilares da Dieta', color: 'book-color-4' },
+    { id: 'page-compendio', label: 'Compêndio Sincrético', color: 'book-color-5' },
+    { id: 'page-sopros', label: 'Sopros de Vida (Prana)', color: 'book-color-1' },
+    { id: 'page-roda', label: 'A Roda do Ano', color: 'book-color-4' },
+    { id: 'page-panteao', label: 'O Panteão', color: 'book-color-5' },
+    { id: 'page-galeria', label: 'Galeria Onírica', color: 'book-color-3' },
+];
+
+const appLinks = [
+    { id: 'page-oraculo', label: 'Oráculo Astral (API)', special: true },
+    { id: 'page-forjador', label: 'Forjador de Sigilos' },
+    { id: 'page-guardiao', label: 'O Guardião (Sobre)' },
+];
 
 const ElfVine: React.FC = () => (
     <svg width="30" height="40" viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-yellow-400 mx-auto">
@@ -15,25 +31,10 @@ const ElfVine: React.FC = () => (
 );
 
 const Sidebar: React.FC<SidebarProps> = ({ navigate, activePage }) => {
-    const { logout } = useAuth();
-    const [openBook, setOpenBook] = useState('O GRIMÓRIO VIRTUAL');
-    const [animatingBook, setAnimatingBook] = useState<string | null>(null);
+    const { currentUser, logout } = useAuth();
 
-    const handleBookClick = (category: string) => {
-        if (openBook === category) {
-            setOpenBook('');
-        } else {
-            setAnimatingBook(category);
-            setTimeout(() => {
-                setOpenBook(category);
-                setAnimatingBook(null);
-            }, 1000);
-        }
-    };
-
-    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, pageId: string) => {
         e.preventDefault();
-        const pageId = `page-${path.substring(1) || 'santuario'}`;
         navigate(pageId);
     };
 
@@ -44,46 +45,20 @@ const Sidebar: React.FC<SidebarProps> = ({ navigate, activePage }) => {
                 <h1 className="text-3xl font-fantasy text-yellow-200">Rota Pagã</h1>
             </div>
             <div className="space-y-2">
-                {navigationData.map((book) => (
-                    <motion.div
-                        key={book.category}
-                        layout
-                        initial={{ opacity: 1 }}
-                        animate={animatingBook === book.category ? { opacity: 0, x: '50vw', y: '50vh', scale: 2, rotate: 180 } : {}}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="h-1 bg-black bg-opacity-20"></div>
-                        <h2
-                            className="book-spine font-fantasy text-lg p-3 rounded-md cursor-pointer"
-                            onClick={() => handleBookClick(book.category)}
-                        >
-                            {book.category}
-                        </h2>
-                        <AnimatePresence>
-                            {openBook === book.category && (
-                                <motion.div
-                                    className="ml-4"
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                >
-                                    {book.pages.map((page) => (
-                                        <a
-                                            href="#"
-                                            key={page.path}
-                                            onClick={(e) => handleLinkClick(e, page.path)}
-                                            className={`block p-2 rounded-md hover:bg-yellow-900/10 ${activePage === `page-${page.path.substring(1) || 'santuario'}` ? 'active' : ''}`}
-                                        >
-                                            {page.title}
-                                        </a>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
+                <h2 className="font-fantasy text-sm text-yellow-200/50 uppercase tracking-widest mb-2 px-3">O Grimório Virtual</h2>
+                {grimoireLinks.map(link => (
+                    <a href="#" key={link.id} onClick={(e) => handleLinkClick(e, link.id)} className={`block book-spine font-fantasy text-lg p-3 rounded-md ${link.color} ${activePage === link.id ? 'active' : ''}`}>
+                        {link.label}
+                    </a>
                 ))}
-                <div className="h-1 bg-black bg-opacity-20"></div>
-                <a href="#" onClick={logout} className="book-spine font-fantasy text-lg p-3 rounded-md">
+                <div className="border-t-4 border-stone-600 my-4 shadow-inner"></div>
+                <h2 className="font-fantasy text-sm text-yellow-200/50 uppercase tracking-widest mb-2 px-3">A Rota Pagã (App)</h2>
+                {appLinks.map(link => (
+                     <a href="#" key={link.id} onClick={(e) => handleLinkClick(e, link.id)} className={`block book-spine font-fantasy text-lg p-3 rounded-md ${link.special ? 'border-yellow-500 border-l-8' : ''} ${activePage === link.id ? 'active' : ''}`}>
+                        {link.label}
+                    </a>
+                ))}
+                 <a href="#" onClick={logout} className="block book-spine font-fantasy text-lg p-3 rounded-md">
                     Sair
                 </a>
             </div>

@@ -48,37 +48,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (loading) {
-                console.warn("AuthContext: Timed out waiting for onAuthStateChanged. Forcing loading to false.");
-                setLoading(false);
-            }
-        }, 5000);
-
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            clearTimeout(timeout);
             try {
                 if (user) {
+                    // If the user is logged in, create/get their profile from Firestore
                     await createUserProfileDocument(user);
                     const profile = await getUserProfile(user.uid);
                     setUserProfile(profile);
                 } else {
+                    // If the user is logged out, clear the profile
                     setUserProfile(null);
                 }
                 setCurrentUser(user);
             } catch (error) {
                 console.error("Error during auth state change:", error);
+                // If profile creation/fetching fails, we should still treat the user as logged in.
+                // The user object from onAuthStateChanged is the source of truth for auth status.
+                // We just might not have a profile in our DB.
                 setCurrentUser(user);
                 setUserProfile(null);
             } finally {
+                // VERY IMPORTANT: Always set loading to false, even if there's an error.
+                // This prevents the app from getting stuck on the loading screen.
                 setLoading(false);
             }
         });
 
-        return () => {
-            clearTimeout(timeout);
-            unsubscribe();
-        };
+        return unsubscribe;
     }, []);
 
     function signup(email: string, pass: string) {
