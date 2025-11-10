@@ -7,6 +7,7 @@ import StarrySky from './components/layout/StarrySky';
 import Sidebar from './components/layout/Sidebar';
 
 // Page Components
+import HomePage from './pages/HomePage';
 import SantuarioPage from './pages/SantuarioPage';
 import JornadaPage from './pages/JornadaPage';
 import PantaculosPage from './pages/PantaculosPage';
@@ -22,7 +23,7 @@ import GuardiaoPage from './pages/GuardiaoPage';
 
 const App: React.FC = () => {
     const { currentUser, loading } = useAuth();
-    const [activePage, setActivePage] = useState('page-santuario'); // Default to Santuario
+    const [activePage, setActivePage] = useState('page-home'); // Default to Home
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navigate = (pageId: string) => {
@@ -51,6 +52,7 @@ const App: React.FC = () => {
 
     const renderActivePage = () => {
         switch (activePage) {
+            case 'page-home': return <HomePage />;
             case 'page-santuario': return <SantuarioPage />;
             case 'page-jornada': return <JornadaPage />;
             case 'page-pantaculos': return <PantaculosPage />;
