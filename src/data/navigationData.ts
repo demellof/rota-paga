@@ -16,6 +16,11 @@ export const navigationData: NavBook[] = [
       { title: 'Jornada Florescer', path: '/jornada' },
       { title: 'Panteão', path: '/panteao' },
       { title: 'Roda do Ano', path: '/roda-do-ano' },
+      { title: 'Pantáculos Planetários', path: '/pantaculos' },
+      { title: 'Pilares da Dieta', path: '/pilares' },
+      { title: 'Compêndio Sincrético', path: '/compendio' },
+      { title: 'Sopros de Vida (Prana)', path: '/sopros' },
+      { title: 'Galeria Onírica', path: '/galeria' },
     ]
   },
   {
