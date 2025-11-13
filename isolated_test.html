@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isolated UI Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+    .comet {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: orange;
+      border-radius: 50%;
+      animation: comet-fall 10s linear infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    @keyframes comet-fall {
+      0% { transform: translate(0, -100px) rotate(-45deg); opacity: 1; }
+      100% { transform: translate(-80vw, 80vh) rotate(-45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-black">
+  <div id="starry-sky" class="absolute top-0 left-0 w-full h-full"></div>
+
+  <button class="fixed top-4 left-4 z-10 p-2 bg-gray-800 rounded-md text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+    </svg>
+  </button>
+
+  <div class="fixed bottom-4 right-4 z-10 p-2 bg-gray-800 rounded-md text-white flex items-center space-x-2">
+    <span>Binaural Beats</span>
+    <button>▶️</button>
+  </div>
+
+  <script>
+    const starrySky = document.getElementById('starry-sky');
+    // Add stars
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      starrySky.appendChild(star);
+    }
+    // Add comets
+    for (let i = 0; i < 5; i++) {
+      const comet = document.createElement('div');
+      comet.className = 'comet';
+      comet.style.top = `${Math.random() * 100}%`;
+      comet.style.left = `${Math.random() * 100}%`;
+      comet.style.animationDelay = `${Math.random() * 10}s`;
+      starrySky.appendChild(comet);
+    }
+  </script>
+</body>
+</html>
