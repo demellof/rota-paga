@@ -1,0 +1,6 @@
+export const astrologyData = [
+    { year: "2024-2026", title: "Transformação e Fundações", icon: "fas fa-sync-alt", description: "Plutão em Aquário desafia sua identidade (Asc) e segurança (Lua), pedindo uma reestruturação profunda de quem você é e do que você valoriza. É tempo de soltar velhas estruturas e abraçar a autenticidade." },
+    { year: "2025", title: "Expansão da Criatividade", icon: "fas fa-palette", description: "Júpiter em Leão traz uma grande oportunidade para expandir sua autoexpressão, criatividade e alegria. É um período para brilhar, se arriscar em projetos apaixonados e se conectar com sua criança interior." },
+    { year: "2026-2028", title: "Disciplina e Novos Inícios", icon: "fas fa-fire", description: "Saturno em Áries testará sua coragem e iniciativa. Será um tempo para construir novas estruturas com disciplina e ação focada, solidificando sua nova identidade. O esforço agora define a base para o futuro." },
+    { year: "Contínuo", title: "Navegando a Sensibilidade", icon: "fas fa-water", description: "Com Netuno em Peixes e Júpiter natal, sua jornada é marcada por uma profunda sensibilidade e intuição. O desafio é usar essa conexão como uma força, sem se perder em ilusões. O aterramento é crucial." }
+];
